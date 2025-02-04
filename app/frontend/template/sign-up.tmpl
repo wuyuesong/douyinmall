@@ -5,7 +5,7 @@
         <form method="post" action="/auth/register">
             <div class="mb-3">
                 <label for="email" class="form-label">Email {{template "requried"}}</label>
-                <input type="email" class="form-control" id="email">
+                <input type="email" class="form-control" id="email" name="email">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password {{template "requried"}}</label>
@@ -18,7 +18,7 @@
             <div class="mb-3">
                 Already have a account, click here to <a href="/sign-in">Sign In</a>
             </div>
-            <button type="submit" class="btn btn-primary">Sgin Up</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
     </div>
 </div>
