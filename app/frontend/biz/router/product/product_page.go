@@ -4,7 +4,7 @@ package product
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	product "github.com/wuyuesong/gomall/biz/handler/product"
+	product "github.com/wuyuesong/gomall/app/frontend/biz/handler/product"
 )
 
 /*

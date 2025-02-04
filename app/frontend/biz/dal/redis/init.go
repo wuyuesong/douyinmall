@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/wuyuesong/gomall/conf"
+	"github.com/wuyuesong/gomall/app/frontend/conf"
 )
 
 var RedisClient *redis.Client

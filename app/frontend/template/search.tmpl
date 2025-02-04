@@ -1,5 +1,6 @@
 {{ define "search" }}
     {{ template "header" . }}
+<div class="container">
     {{ if .q }}
         <div class="d-inline-block border border-success rounded-4 p-1 ps-4 pe-4">
             <div>
@@ -28,5 +29,6 @@
             </div>
         {{ end}}
     </div>
+</div>
     {{ template "footer" . }}
 {{ end }}

@@ -5,9 +5,8 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/utils"
-	common "github.com/wuyuesong/gomall/hertz_gen/frontend/common"
-	product "github.com/wuyuesong/gomall/hertz_gen/frontend/product"
-	"github.com/wuyuesong/gomall/infra/rpc"
+	product "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/product"
+	"github.com/wuyuesong/gomall/app/frontend/infra/rpc"
 	rpcproduct "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product"
 )
 
@@ -20,8 +19,8 @@ func NewSearchProductsService(Context context.Context, RequestContext *app.Reque
 	return &SearchProductsService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *SearchProductsService) Run(req *product.SearchProductReq) (resp *common.Empty, err error) {
-	products, err := rpc.ProductClient.SearchProduct(h.Context, &rpcproduct.SearchProductReq{
+func (h *SearchProductsService) Run(req *product.SearchProductReq) (resp map[string]any, err error) {
+	products, err := rpc.ProductClient.SearchProducts(h.Context, &rpcproduct.SearchProductReq{
 		Query: req.Q,
 	})
 	if err != nil {

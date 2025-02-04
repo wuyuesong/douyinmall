@@ -7,6 +7,7 @@ import (
 	consul "github.com/kitex-contrib/registry-consul"
 	"github.com/wuyuesong/gomall/app/frontend/conf"
 	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
+	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart/cartservice"
 	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/user/userservice"
 )
@@ -14,6 +15,7 @@ import (
 var (
 	UserClient    userservice.Client
 	ProductClient productcatalogservice.Client
+	CartClient    cartservice.Client
 	once          sync.Once
 )
 
@@ -40,6 +42,6 @@ func initProductClient() {
 	frontendUtils.MustHandleError(err)
 	opts = append(opts, client.WithResolver(r))
 
-	UserClient, err = productcatalogservice.NewClient("product", opts...)
+	ProductClient, err = productcatalogservice.NewClient("product", opts...)
 	frontendUtils.MustHandleError(err)
 }
