@@ -3,6 +3,7 @@ module github.com/wuyuesong/gomall/app/frontend
 go 1.23.5
 
 replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
+replace github.com/cloudwego/biz-demo/gomall/rpc_gen => ../../rpc_gen
 
 require (
 	github.com/cloudwego/hertz v0.9.5
@@ -17,7 +18,7 @@ require (
 	github.com/kitex-contrib/registry-consul v0.1.0
 	github.com/kr/pretty v0.3.1
 	github.com/redis/go-redis/v9 v9.7.0
-	github.com/wuyuesong/gomall v0.0.0-20250204123005-e27dbbfc492b
+	github.com/wuyuesong/gomall v0.0.0-20250204172940-21bd9a6a6ede
 	go.uber.org/zap v1.27.0
 	google.golang.org/protobuf v1.36.4
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1

@@ -5,6 +5,8 @@ go 1.23.5
 require (
 	github.com/cloudwego/fastpb v0.0.5
 	github.com/cloudwego/kitex v0.12.1
+	github.com/durango/go-credit-card v0.0.0-20220404131259-a9e175ba4082
+	github.com/google/uuid v1.1.2
 	github.com/joho/godotenv v1.5.1
 	github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241120035129-55da83caab1b
 	github.com/kitex-contrib/registry-consul v0.1.0
@@ -84,5 +86,5 @@ require (
 )
 
 replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
-replace github.com/wuyuesong/gomall/rpc_gen/ => ../../rpc_gen/
 
+replace github.com/wuyuesong/gomall/rpc_gen/ => ../../rpc_gen/

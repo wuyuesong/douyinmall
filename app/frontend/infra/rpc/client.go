@@ -8,6 +8,7 @@ import (
 	"github.com/wuyuesong/gomall/app/frontend/conf"
 	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
 	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart/cartservice"
+	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/checkout/checkoutservice"
 	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/user/userservice"
 )
@@ -23,6 +24,7 @@ func Init() {
 	once.Do(func() {
 		initUserClient()
 		initProductClient()
+		initCartClient()
 	})
 }
 
@@ -43,5 +45,23 @@ func initProductClient() {
 	opts = append(opts, client.WithResolver(r))
 
 	ProductClient, err = productcatalogservice.NewClient("product", opts...)
+	frontendUtils.MustHandleError(err)
+}
+
+func initCartClient() {
+	var opts []client.Option
+	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddr)
+	frontendUtils.MustHandleError(err)
+	opts = append(opts, client.WithResolver(r))
+	CartClient, err = cartservice.NewClient("cart", opts...)
+	frontendUtils.MustHandleError(err)
+}
+
+func initCheckoutClient() {
+	var opts []client.Option
+	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddr)
+	frontendUtils.MustHandleError(err)
+	opts = append(opts, client.WithResolver(r))
+	CheckoutClient, err = checkoutservice.NewClient("checkout", opts...)
 	frontendUtils.MustHandleError(err)
 }

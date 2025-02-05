@@ -58,8 +58,27 @@ gen-category-page:
 gen-cart-page:
 	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/cart_page.proto  --service frontend -module github.com/wuyuesong/gomall/app/frontend -I ../../idl
 
+.PHONY:	gen-checkout-page
+gen-checkout-page:
+	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/checkout_page.proto  --service frontend -module github.com/wuyuesong/gomall/app/frontend -I ../../idl
+
+
+
 .PHONY: gen-cart
 gen-cart:
 	@cd rpc_gen && cwgo client --type RPC --idl ../idl/cart.proto --service cart -module github.com/wuyuesong/gomall -I ../idl 
 	@cd app/cart && cwgo server --type RPC --idl ../../idl/cart.proto --service cart -module github.com/wuyuesong/gomall -I ../../idl --pass "-use github.com/wuyuesong/gomall/rpc_gen/kitex_gen"
+
+
+.PHONY: gen-payment
+gen-payment:
+	@cd rpc_gen && cwgo client --type RPC --idl ../idl/payment.proto --service payment -module github.com/wuyuesong/gomall -I ../idl 
+	@cd app/payment && cwgo server --type RPC --idl ../../idl/payment.proto --service payment -module github.com/wuyuesong/gomall -I ../../idl --pass "-use github.com/wuyuesong/gomall/rpc_gen/kitex_gen"
+
+.PHONY: gen-checkout
+gen-checkout:
+	@cd rpc_gen && cwgo client --type RPC --idl ../idl/checkout.proto --service checkout -module github.com/wuyuesong/gomall -I ../idl 
+	@cd app/checkout && cwgo server --type RPC --idl ../../idl/checkout.proto --service checkout -module github.com/wuyuesong/gomall -I ../../idl --pass "-use github.com/wuyuesong/gomall/rpc_gen/kitex_gen"
+
+
 
