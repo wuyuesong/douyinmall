@@ -1,11 +1,13 @@
 kitex:
   service: "cart"
   address: ":8887"
+  metrics_port: ":9993"
   log_level: info
   log_file_name: "log/kitex.log"
   log_max_size: 10
   log_max_age: 3
   log_max_backups: 50
+  registry_address: "127.0.0.1:8500"
 
 registry:
   registry_address:

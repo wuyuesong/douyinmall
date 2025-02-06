@@ -2,9 +2,15 @@ package service
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	utils "github.com/cloudwego/hertz/pkg/common/utils"
 	common "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/common"
+	"github.com/wuyuesong/gomall/app/frontend/infra/rpc"
+	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
+	rpccart "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart"
+	rpcproduct "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product"
 )
 
 type CheckoutService struct {
@@ -16,11 +22,39 @@ func NewCheckoutService(Context context.Context, RequestContext *app.RequestCont
 	return &CheckoutService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *CheckoutService) Run(req *common.Empty) (resp *common.Empty, err error) {
-	//defer func() {
-	// hlog.CtxInfof(h.Context, "req = %+v", req)
-	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
-	//}()
-	// todo edit your code
-	return
+func (h *CheckoutService) Run(req *common.Empty) (resp map[string]any, err error) {
+	var items []map[string]string
+	userId := frontendUtils.GetUserIdFromCtx(h.Context)
+
+	carts, err := rpc.CartClient.GetCart(h.Context, &rpccart.GetCartReq{UserId: uint32(userId)})
+	if err != nil {
+		return nil, err
+	}
+	var total float32
+
+	for _, v := range carts.Items {
+		productResp, err := rpc.ProductClient.GetProduct(h.Context, &rpcproduct.GetProductReq{
+			Id: v.ProductId,
+		})
+		if err != nil {
+			return nil, err
+		}
+		if productResp.Product == nil {
+			continue
+		}
+		p := productResp.Product
+		items = append(items, map[string]string{
+			"Name":    p.Name,
+			"Price":   strconv.FormatFloat(float64(p.Price), 'f', 2, 64),
+			"Picture": p.Picture,
+			"Qty":     strconv.Itoa(int(v.Quantity)),
+		})
+		total += float32(v.Quantity) * p.Price
+	}
+
+	return utils.H{
+		"title": "Checkout",
+		"items": items,
+		"total": strconv.FormatFloat(float64(total), 'f', 2, 64),
+	}, nil
 }
