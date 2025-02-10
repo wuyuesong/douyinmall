@@ -19,7 +19,7 @@ func NewLoginService(Context context.Context, RequestContext *app.RequestContext
 	return &LoginService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *LoginService) Run(req *auth.LoginReq) (redirect string, err error) {
+func (h *LoginService) Run(req *auth.LoginReq) (userId int32, err error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
@@ -29,18 +29,14 @@ func (h *LoginService) Run(req *auth.LoginReq) (redirect string, err error) {
 		Password: req.Password,
 	})
 	if err != nil {
-		return "", err
+		return 0, err
 	}
 
 	session := sessions.Default(h.RequestContext)
 	session.Set("user_id", resp.UserId)
 	err = session.Save()
 	if err != nil {
-		return "", err
-	}
-	redirect = "/"
-	if req.Next != "" {
-		redirect = req.Next
+		return 0, err
 	}
 	return
 }

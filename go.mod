@@ -12,11 +12,11 @@ require (
 	github.com/kr/pretty v0.3.1
 	github.com/nats-io/nats.go v1.39.0
 	github.com/redis/go-redis/v9 v9.7.0
-	github.com/wuyuesong/douyinmall/common v0.0.0-20250206151310-b76eab37a62e
-	github.com/wuyuesong/douyinmall/rpc_gen v0.0.0-00010101000000-000000000000
+	github.com/wuyuesong/douyinmall/common v0.0.0-20250210055543-79fc0835bf92
+	github.com/wuyuesong/douyinmall/rpc_gen v0.0.0-20250210055543-79fc0835bf92
 	go.uber.org/zap v1.27.0
-	golang.org/x/crypto v0.32.0
-	google.golang.org/protobuf v1.36.4
+	golang.org/x/crypto v0.33.0
+	google.golang.org/protobuf v1.36.5
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gopkg.in/validator.v2 v2.0.1
 	gopkg.in/yaml.v2 v2.4.0
@@ -70,7 +70,7 @@ require (
 	github.com/kitex-contrib/monitor-prometheus v0.2.0 // indirect
 	github.com/kitex-contrib/obs-opentelemetry v0.2.9 // indirect
 	github.com/kitex-contrib/obs-opentelemetry/logging/zap v0.0.0-20241120035129-55da83caab1b // indirect
-	github.com/klauspost/compress v1.17.11 // indirect
+	github.com/klauspost/compress v1.17.9 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
@@ -112,16 +112,12 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/arch v0.2.0 // indirect
 	golang.org/x/net v0.34.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.29.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/sync v0.11.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250115164207-1a7da9e5054f // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f // indirect
 	google.golang.org/grpc v1.69.4 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
-
-replace github.com/wuyuesong/douyinmall/rpc_gen => ./rpc_gen

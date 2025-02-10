@@ -48,6 +48,8 @@ func main() {
 	// init dal
 	// dal.Init()
 	rpc.Init()
+	middleware.InitJwt(os.Getenv("SESSION_SECRET"))
+
 	address := conf.GetConf().Hertz.Address
 	h := server.New(server.WithHostPorts(address))
 
@@ -57,6 +59,10 @@ func main() {
 	h.GET("/ping", func(c context.Context, ctx *app.RequestContext) {
 		ctx.JSON(consts.StatusOK, utils.H{"ping": "pong"})
 	})
+
+	auth := h.Group("/auth")
+
+	auth.POST("login", middleware.JwtMiddleware.LoginHandler)
 
 	router.GeneratedRegister(h)
 	h.LoadHTMLGlob("template/*")

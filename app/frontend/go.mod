@@ -28,7 +28,10 @@ require (
 	gorm.io/gorm v1.25.12
 )
 
-require github.com/wuyuesong/douyinmall/rpc_gen v0.0.0-00010101000000-000000000000
+require (
+	github.com/hertz-contrib/jwt v1.0.2
+	github.com/wuyuesong/douyinmall/rpc_gen v0.0.0-00010101000000-000000000000
+)
 
 require (
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
@@ -54,6 +57,7 @@ require (
 	github.com/felixge/fgprof v0.9.3 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
+	github.com/golang-jwt/jwt/v4 v4.4.1 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/gomodule/redigo v1.8.9 // indirect
 	github.com/google/pprof v0.0.0-20240727154555-813a5fbdbec8 // indirect
