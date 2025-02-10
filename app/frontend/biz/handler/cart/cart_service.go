@@ -5,10 +5,10 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"github.com/wuyuesong/gomall/app/frontend/biz/service"
-	"github.com/wuyuesong/gomall/app/frontend/biz/utils"
-	cart "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/cart"
-	common "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/common"
+	"github.com/wuyuesong/douyinmall/app/frontend/biz/service"
+	"github.com/wuyuesong/douyinmall/app/frontend/biz/utils"
+	cart "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/cart"
+	common "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/common"
 )
 
 // GetCart .

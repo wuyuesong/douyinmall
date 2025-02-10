@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/joho/godotenv"
-	"github.com/wuyuesong/gomall/app/user/biz/dal/mysql"
-	user "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/user"
+	"github.com/wuyuesong/douyinmall/app/user/biz/dal/mysql"
+	user "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 )
 
 func TestRegister_Run(t *testing.T) {

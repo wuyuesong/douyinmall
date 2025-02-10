@@ -5,7 +5,7 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	utils "github.com/cloudwego/hertz/pkg/common/utils"
-	common "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/common"
+	common "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/common"
 )
 
 type CheckoutResultService struct {

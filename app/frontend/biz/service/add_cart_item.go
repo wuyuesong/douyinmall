@@ -4,11 +4,11 @@ import (
 	"context"
 
 	"github.com/cloudwego/hertz/pkg/app"
-	cart "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/cart"
-	common "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/common"
-	"github.com/wuyuesong/gomall/app/frontend/infra/rpc"
-	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
-	rpccart "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart"
+	cart "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/cart"
+	common "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/common"
+	"github.com/wuyuesong/douyinmall/app/frontend/infra/rpc"
+	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/utils"
+	rpccart "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart"
 )
 
 type AddCartItemService struct {

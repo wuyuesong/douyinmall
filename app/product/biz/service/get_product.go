@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/cloudwego/kitex/pkg/kerrors"
-	"github.com/wuyuesong/gomall/app/product/biz/dal/mysql"
-	"github.com/wuyuesong/gomall/app/product/biz/model"
-	product "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product"
+	"github.com/wuyuesong/douyinmall/app/product/biz/dal/mysql"
+	"github.com/wuyuesong/douyinmall/app/product/biz/model"
+	product "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/product"
 )
 
 type GetProductService struct {

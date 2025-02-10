@@ -4,7 +4,7 @@ package cart
 
 import (
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/wuyuesong/gomall/app/frontend/middleware"
+	"github.com/wuyuesong/douyinmall/app/frontend/middleware"
 )
 
 func rootMw() []app.HandlerFunc {

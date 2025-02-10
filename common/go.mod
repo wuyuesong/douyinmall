@@ -1,4 +1,4 @@
-module github.com/wuyuesong/gomall/common
+module github.com/wuyuesong/douyinmall/common
 
 go 1.23.5
 

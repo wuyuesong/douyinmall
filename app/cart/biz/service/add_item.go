@@ -4,11 +4,11 @@ import (
 	"context"
 
 	"github.com/cloudwego/kitex/pkg/kerrors"
-	"github.com/wuyuesong/gomall/app/cart/biz/dal/mysql"
-	"github.com/wuyuesong/gomall/app/cart/biz/model"
-	"github.com/wuyuesong/gomall/app/cart/infra/rpc"
-	cart "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product"
+	"github.com/wuyuesong/douyinmall/app/cart/biz/dal/mysql"
+	"github.com/wuyuesong/douyinmall/app/cart/biz/model"
+	"github.com/wuyuesong/douyinmall/app/cart/infra/rpc"
+	cart "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/product"
 )
 
 type AddItemService struct {

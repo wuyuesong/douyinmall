@@ -5,13 +5,13 @@ import (
 
 	"github.com/cloudwego/kitex/client"
 	consul "github.com/kitex-contrib/registry-consul"
-	"github.com/wuyuesong/gomall/app/frontend/conf"
-	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart/cartservice"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/checkout/checkoutservice"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/order/orderservice"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product/productcatalogservice"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/user/userservice"
+	"github.com/wuyuesong/douyinmall/app/frontend/conf"
+	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/utils"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart/cartservice"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/checkout/checkoutservice"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/order/orderservice"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/product/productcatalogservice"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user/userservice"
 )
 
 var (

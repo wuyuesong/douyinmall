@@ -8,7 +8,7 @@ import (
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 	streaming "github.com/cloudwego/kitex/pkg/streaming"
-	cart "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart"
+	cart "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart"
 	proto "google.golang.org/protobuf/proto"
 )
 

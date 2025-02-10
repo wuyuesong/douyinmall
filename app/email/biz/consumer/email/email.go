@@ -4,11 +4,11 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/server"
 	"github.com/nats-io/nats.go"
-	"github.com/wuyuesong/gomall/app/email/infra/mq"
-	"github.com/wuyuesong/gomall/app/email/infra/notify"
+	"github.com/wuyuesong/douyinmall/app/email/infra/mq"
+	"github.com/wuyuesong/douyinmall/app/email/infra/notify"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/email"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/email"
 )
 
 func ConsumerInit() {

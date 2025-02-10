@@ -13,7 +13,7 @@
 # .PHONY:	gen-rpc-server
 # gen-rpc-server:
 # 	@cd app/user && cwgo server --type RPC --idl ../../idl/user.proto --service user -module ${ROOT_MOD}/app/user -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
-export ROOT_MOD=github.com/wuyuesong/gomall
+export ROOT_MOD=github.com/wuyuesong/douyinmall
 
 
 .PHONY:	all

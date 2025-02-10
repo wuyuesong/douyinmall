@@ -6,10 +6,10 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/hertz-contrib/sessions"
-	auth "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/auth"
-	common "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/common"
-	"github.com/wuyuesong/gomall/app/frontend/infra/rpc"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/user"
+	auth "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/auth"
+	common "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/common"
+	"github.com/wuyuesong/douyinmall/app/frontend/infra/rpc"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 )
 
 type RegisterService struct {

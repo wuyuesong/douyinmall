@@ -5,11 +5,11 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	utils "github.com/cloudwego/hertz/pkg/common/utils"
-	checkout "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/checkout"
-	"github.com/wuyuesong/gomall/app/frontend/infra/rpc"
-	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
-	rpccheckout "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/checkout"
-	rpcpayment "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/payment"
+	checkout "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/checkout"
+	"github.com/wuyuesong/douyinmall/app/frontend/infra/rpc"
+	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/utils"
+	rpccheckout "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/checkout"
+	rpcpayment "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment"
 )
 
 type CheckoutWaitingService struct {

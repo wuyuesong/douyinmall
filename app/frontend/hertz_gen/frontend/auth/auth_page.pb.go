@@ -7,8 +7,8 @@
 package auth
 
 import (
-	_ "github.com/wuyuesong/gomall/app/frontend/hertz_gen/api"
-	common "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/common"
+	_ "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/api"
+	common "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

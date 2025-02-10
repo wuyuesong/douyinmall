@@ -4,7 +4,7 @@ package userservice
 
 import (
 	server "github.com/cloudwego/kitex/server"
-	user "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/user"
+	user "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 )
 
 // NewInvoker creates a server.Invoker with the given handler and options.

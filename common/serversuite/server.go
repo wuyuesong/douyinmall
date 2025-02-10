@@ -7,7 +7,7 @@ import (
 	"github.com/hertz-contrib/obs-opentelemetry/provider"
 	prometheus "github.com/kitex-contrib/monitor-prometheus"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
-	"github.com/wuyuesong/gomall/common/mtl"
+	"github.com/wuyuesong/douyinmall/common/mtl"
 )
 
 type CommonServerSuite struct {

@@ -9,12 +9,12 @@ import (
 	"github.com/cloudwego/kitex/server"
 	"github.com/joho/godotenv"
 	consul "github.com/kitex-contrib/registry-consul"
-	"github.com/wuyuesong/gomall/app/cart/biz/dal"
-	"github.com/wuyuesong/gomall/app/cart/conf"
-	"github.com/wuyuesong/gomall/app/cart/infra/rpc"
-	"github.com/wuyuesong/gomall/common/mtl"
-	"github.com/wuyuesong/gomall/common/serversuite"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart/cartservice"
+	"github.com/wuyuesong/douyinmall/app/cart/biz/dal"
+	"github.com/wuyuesong/douyinmall/app/cart/conf"
+	"github.com/wuyuesong/douyinmall/app/cart/infra/rpc"
+	"github.com/wuyuesong/douyinmall/common/mtl"
+	"github.com/wuyuesong/douyinmall/common/serversuite"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart/cartservice"
 )
 
 var serviceName = conf.GetConf().Kitex.Service

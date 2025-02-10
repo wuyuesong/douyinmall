@@ -6,7 +6,7 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/hertz-contrib/sessions"
-	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
+	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/utils"
 )
 
 type SessionUserIdKey string

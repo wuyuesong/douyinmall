@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 
-	"github.com/wuyuesong/gomall/app/payment/biz/service"
-	payment "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/payment"
+	"github.com/wuyuesong/douyinmall/app/payment/biz/service"
+	payment "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment"
 )
 
 // PaymentServiceImpl implements the last service interface defined in the IDL.

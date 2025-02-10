@@ -3,7 +3,7 @@ package emailservice
 
 import (
 	server "github.com/cloudwego/kitex/server"
-	email "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/email"
+	email "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/email"
 )
 
 // NewServer creates a server.Server with the given handler and options.

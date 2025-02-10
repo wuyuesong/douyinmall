@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/wuyuesong/gomall/app/product/biz/model"
-	"github.com/wuyuesong/gomall/app/product/conf"
+	"github.com/wuyuesong/douyinmall/app/product/biz/model"
+	"github.com/wuyuesong/douyinmall/app/product/conf"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/wuyuesong/gomall/app/user/biz/dal/mysql"
-	"github.com/wuyuesong/gomall/app/user/biz/model"
-	user "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/user"
+	"github.com/wuyuesong/douyinmall/app/user/biz/dal/mysql"
+	"github.com/wuyuesong/douyinmall/app/user/biz/model"
+	user "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 	"golang.org/x/crypto/bcrypt"
 )
 

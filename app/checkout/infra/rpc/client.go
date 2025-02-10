@@ -8,11 +8,11 @@ import (
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/transport"
 	consul "github.com/kitex-contrib/registry-consul"
-	"github.com/wuyuesong/gomall/app/checkout/conf"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart/cartservice"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/order/orderservice"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/payment/paymentservice"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product/productcatalogservice"
+	"github.com/wuyuesong/douyinmall/app/checkout/conf"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart/cartservice"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/order/orderservice"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment/paymentservice"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/product/productcatalogservice"
 )
 
 var (

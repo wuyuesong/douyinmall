@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 
-	"github.com/wuyuesong/gomall/app/email/biz/service"
-	email "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/email"
+	"github.com/wuyuesong/douyinmall/app/email/biz/service"
+	email "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/email"
 )
 
 // EmailServiceImpl implements the last service interface defined in the IDL.

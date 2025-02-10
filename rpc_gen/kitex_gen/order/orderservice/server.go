@@ -3,7 +3,7 @@ package orderservice
 
 import (
 	server "github.com/cloudwego/kitex/server"
-	order "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/order"
+	order "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/order"
 )
 
 // NewServer creates a server.Server with the given handler and options.

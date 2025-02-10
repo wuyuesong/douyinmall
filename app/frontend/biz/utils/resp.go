@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/wuyuesong/gomall/app/frontend/infra/rpc"
-	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart"
+	"github.com/wuyuesong/douyinmall/app/frontend/infra/rpc"
+	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/utils"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart"
 )
 
 // SendErrResponse  pack error response

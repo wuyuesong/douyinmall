@@ -9,9 +9,9 @@ import (
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	creditcard "github.com/durango/go-credit-card"
 	"github.com/google/uuid"
-	"github.com/wuyuesong/gomall/app/payment/biz/dal/mysql"
-	"github.com/wuyuesong/gomall/app/payment/biz/model"
-	payment "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/payment"
+	"github.com/wuyuesong/douyinmall/app/payment/biz/dal/mysql"
+	"github.com/wuyuesong/douyinmall/app/payment/biz/model"
+	payment "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment"
 )
 
 type ChargeService struct {

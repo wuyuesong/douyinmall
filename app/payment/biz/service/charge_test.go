@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"testing"
-	payment "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/payment"
+	payment "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment"
 )
 
 func TestCharge_Run(t *testing.T) {

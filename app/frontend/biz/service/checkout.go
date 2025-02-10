@@ -6,11 +6,11 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	utils "github.com/cloudwego/hertz/pkg/common/utils"
-	common "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/common"
-	"github.com/wuyuesong/gomall/app/frontend/infra/rpc"
-	frontendUtils "github.com/wuyuesong/gomall/app/frontend/utils"
-	rpccart "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/cart"
-	rpcproduct "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product"
+	common "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/common"
+	"github.com/wuyuesong/douyinmall/app/frontend/infra/rpc"
+	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/utils"
+	rpccart "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart"
+	rpcproduct "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/product"
 )
 
 type CheckoutService struct {

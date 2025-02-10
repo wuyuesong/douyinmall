@@ -4,7 +4,7 @@ package cart
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	cart "github.com/wuyuesong/gomall/app/frontend/biz/handler/cart"
+	cart "github.com/wuyuesong/douyinmall/app/frontend/biz/handler/cart"
 )
 
 /*

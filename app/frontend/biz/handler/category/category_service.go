@@ -5,9 +5,9 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"github.com/wuyuesong/gomall/app/frontend/biz/service"
-	"github.com/wuyuesong/gomall/app/frontend/biz/utils"
-	category "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/category"
+	"github.com/wuyuesong/douyinmall/app/frontend/biz/service"
+	"github.com/wuyuesong/douyinmall/app/frontend/biz/utils"
+	category "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/category"
 )
 
 // Category .

@@ -4,7 +4,7 @@ package checkout
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	checkout "github.com/wuyuesong/gomall/app/frontend/biz/handler/checkout"
+	checkout "github.com/wuyuesong/douyinmall/app/frontend/biz/handler/checkout"
 )
 
 /*

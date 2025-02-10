@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"github.com/wuyuesong/gomall/app/checkout/conf"
+	"github.com/wuyuesong/douyinmall/app/checkout/conf"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

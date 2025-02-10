@@ -1,10 +1,10 @@
-module github.com/wuyuesong/gomall/app/frontend
+module github.com/wuyuesong/douyinmall/app/frontend
 
 go 1.23.5
 
 replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 
-replace github.com/wuyuesong/gomall/rpc_gen => ../../rpc_gen
+replace github.com/wuyuesong/douyinmall/rpc_gen => ../../rpc_gen
 
 require (
 	github.com/cloudwego/hertz v0.9.5
@@ -28,7 +28,7 @@ require (
 	gorm.io/gorm v1.25.12
 )
 
-require github.com/wuyuesong/gomall/rpc_gen v0.0.0-00010101000000-000000000000
+require github.com/wuyuesong/douyinmall/rpc_gen v0.0.0-00010101000000-000000000000
 
 require (
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect

@@ -10,9 +10,9 @@ import (
 	"github.com/joho/godotenv"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	consul "github.com/kitex-contrib/registry-consul"
-	"github.com/wuyuesong/gomall/app/product/biz/dal"
-	"github.com/wuyuesong/gomall/app/product/conf"
-	"github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product/productcatalogservice"
+	"github.com/wuyuesong/douyinmall/app/product/biz/dal"
+	"github.com/wuyuesong/douyinmall/app/product/conf"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )

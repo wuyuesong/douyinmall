@@ -5,7 +5,7 @@ package checkout
 import (
 	fmt "fmt"
 	fastpb "github.com/cloudwego/fastpb"
-	payment "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/payment"
+	payment "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment"
 )
 
 var (

@@ -1,4 +1,4 @@
-module github.com/wuyuesong/gomall/rpc_gen
+module github.com/wuyuesong/douyinmall/rpc_gen
 
 go 1.23.5
 

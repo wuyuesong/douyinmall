@@ -5,9 +5,9 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/utils"
-	product "github.com/wuyuesong/gomall/app/frontend/hertz_gen/frontend/product"
-	"github.com/wuyuesong/gomall/app/frontend/infra/rpc"
-	rpcproduct "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/product"
+	product "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/product"
+	"github.com/wuyuesong/douyinmall/app/frontend/infra/rpc"
+	rpcproduct "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/product"
 )
 
 type SearchProductsService struct {

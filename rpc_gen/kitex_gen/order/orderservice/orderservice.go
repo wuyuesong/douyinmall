@@ -8,7 +8,7 @@ import (
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 	streaming "github.com/cloudwego/kitex/pkg/streaming"
-	order "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/order"
+	order "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/order"
 	proto "google.golang.org/protobuf/proto"
 )
 

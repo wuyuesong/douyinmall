@@ -5,9 +5,9 @@ import (
 
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/google/uuid"
-	"github.com/wuyuesong/gomall/app/order/biz/dal/mysql"
-	"github.com/wuyuesong/gomall/app/order/biz/model"
-	order "github.com/wuyuesong/gomall/rpc_gen/kitex_gen/order"
+	"github.com/wuyuesong/douyinmall/app/order/biz/dal/mysql"
+	"github.com/wuyuesong/douyinmall/app/order/biz/model"
+	order "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/order"
 	"gorm.io/gorm"
 )
 
