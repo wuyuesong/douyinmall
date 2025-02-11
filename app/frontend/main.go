@@ -62,7 +62,8 @@ func main() {
 
 	auth := h.Group("/auth")
 
-	auth.POST("login", middleware.JwtMiddleware.LoginHandler)
+	auth.POST("/login", middleware.JwtMiddleware.LoginHandler)
+	auth.GET("/refresh_token", middleware.JwtMiddleware.RefreshHandler)
 
 	router.GeneratedRegister(h)
 	h.LoadHTMLGlob("template/*")

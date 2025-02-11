@@ -25,6 +25,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/hertz/pkg/common/utils"
+	"github.com/cloudwego/hertz/pkg/protocol"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/hertz-contrib/jwt"
 	"github.com/wuyuesong/douyinmall/app/frontend/biz/service"
@@ -53,13 +54,10 @@ func InitJwt(secretKey string) {
 			if req.Next != "" {
 				redirect = req.Next
 			}
+
+			c.SetCookie("jwt", token, int(expire.Sub(time.Now()).Seconds()), "/", "", protocol.CookieSameSiteLaxMode, false, true)
+
 			c.Redirect(consts.StatusOK, []byte(redirect))
-			// c.JSON(http.StatusOK, utils.H{
-			// 	"code":    code,
-			// 	"token":   token,
-			// 	"expire":  expire.Format(time.RFC3339),
-			// 	"message": "success",
-			// })
 		},
 		Authenticator: func(ctx context.Context, c *app.RequestContext) (interface{}, error) {
 			var err error
