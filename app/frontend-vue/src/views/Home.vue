@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <el-menu
     :default-active="activeIndex"
     class="el-menu-demo"
@@ -29,19 +29,30 @@
         </el-sub-menu>
       </el-sub-menu>
     </div>
-    <div style="margin-right: 10px;">
+    <div style="margin-right: 0px">
       <el-input
         v-model="input2"
-        style="width: 240px; height: 35px; "
+        style="width: 240px; height: 35px; margin-right: 20px;"
         placeholder="搜索商品"
         :prefix-icon="Search"
       />
+    </div>
+    <el-icon :size="25" style="margin-right: 20px"><ShoppingCart /></el-icon>
+    <div v-if="hasToken">
+      <el-avatar style="margin-right: 100px"
+        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+      />
+    </div>
+    <div v-else>
+      <el-button type="primary" style="margin-right: 100px" @click="gotoLogin">登录</el-button>
     </div>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted} from 'vue'
+import Cookies from 'js-cookie'
+import { useRouter } from 'vue-router'
 
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
@@ -50,10 +61,38 @@ const handleSelect = (key: string, keyPath: string[]) => {
 
 import {Search} from '@element-plus/icons-vue'
 const input2 = ref('')
-</script>
+
+const hasToken = ref(!!Cookies.get('token'))
+
+const router = useRouter() // 使用 useRouter 获取路由实例
+
+const gotoLogin = () => {
+  router.push('/login') // 使用 router.push 跳转到登录页面
+}
+
+onMounted(() => {
+		hasToken.value = !!Cookies.get('token')
+});
+
+
+</script> -->
 
 <!-- <style scoped>
 .el-menu--horizontal > .el-menu-item:nth-child(1) {
   margin-right: auto;
 }
 </style> -->
+<template>
+  <Header></Header>
+</template>
+
+<script>
+import Header from '../components/Header.vue';
+
+export default {
+  components: {
+    Header
+  }
+}
+
+</script>
