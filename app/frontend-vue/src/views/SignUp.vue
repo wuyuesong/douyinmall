@@ -2,7 +2,7 @@
     <Header></Header>
     <div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
         <div class="col-4">
-        <form method="post" action="/auth/register">
+          <form @submit.prevent="handleSignUp">
             <div class="mb-3">
               <label for="email" class="form-label">邮件 <Required /></label>
               <input type="email" class="form-control" id="email" name="email">
@@ -18,7 +18,7 @@
             <div class="mb-3">
                 已有账号，点击此处登录 <a href="/login">登录</a>.
             </div>
-            <button type="submit" class="btn btn-primary">注册</button>
+            <button type="submit" class="btn btn-primary"   @click="handleSignUp">注册</button>
           </form>
     </div>
 </div>
@@ -28,11 +28,38 @@
     import '../assets/bootstrap.min.css';
     import Header from '../components/Header.vue';
     import Required from '../components/Required.vue';
+    import { useRouter } from 'vue-router'
+
+    const router = useRouter()
 
     export default {
         components: {
             Header, // 注册 Header 组件
             Required
+        },
+        data() {
+            return {
+                email: '',
+                password: '',
+                password_confirm: ''
+            }
+        },
+        methods: {
+            async handleSignUp() {
+                try {
+                    // 这里替换为实际的登录请求
+                    const response = await this.$axios.post('/auth/register', {
+                        email: this.email,
+                        password: this.password,
+                        password_confirm: this.password_confirm
+                    })
+                    // 跳转登录界面
+                    console.log('this.redirect', this.redirect)
+                    this.$router.push('/login' || '/')
+                } catch (error) {
+                    console.error('登录失败', error)
+                }
+            }
         }
     }
 </script>
