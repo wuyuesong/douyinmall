@@ -67,8 +67,12 @@
   const router = useRouter() // 使用 useRouter 获取路由实例
   
   const gotoLogin = () => {
-    router.push('/login') // 使用 router.push 跳转到登录页面
-  }
+    // 获取当前路由的完整路径
+    const currentPath = router.currentRoute.value.fullPath;
+    console.log(currentPath);
+    // 使用 router.push 跳转到登录页面，并将当前路径作为 redirect 参数
+    router.push({ path: '/login', query: { redirect: currentPath } });
+}
 
   const gotoHome = () => {
     router.push('/home') // 使用 router.push 跳转到登录页面
