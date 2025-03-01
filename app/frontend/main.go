@@ -60,12 +60,11 @@ func main() {
 		ctx.JSON(consts.StatusOK, utils.H{"ping": "pong"})
 	})
 
+	router.GeneratedRegister(h)
 	auth := h.Group("/auth")
 
 	auth.POST("/login", middleware.JwtMiddleware.LoginHandler)
 	auth.GET("/refresh_token", middleware.JwtMiddleware.RefreshHandler)
-
-	router.GeneratedRegister(h)
 	h.LoadHTMLGlob("template/*")
 	h.Static("/static", "./")
 
