@@ -19,24 +19,24 @@ func NewLoginService(Context context.Context, RequestContext *app.RequestContext
 	return &LoginService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *LoginService) Run(req *auth.LoginReq) (userId int32, err error) {
+func (h *LoginService) Run(req *auth.LoginReq) (resp *user.LoginResp, err error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
-	resp, err := rpc.UserClient.Login(h.Context, &user.LoginReq{
+	loginResp, err := rpc.UserClient.Login(h.Context, &user.LoginReq{
 		Email:    req.Email,
 		Password: req.Password,
 	})
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
 	session := sessions.Default(h.RequestContext)
-	session.Set("user_id", resp.UserId)
+	session.Set("user_id", loginResp.UserId)
 	err = session.Save()
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
-	return
+	return loginResp, nil
 }

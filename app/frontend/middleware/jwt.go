@@ -30,6 +30,7 @@ import (
 	"github.com/wuyuesong/douyinmall/app/frontend/biz/service"
 	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/biz/utils"
 	"github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/auth"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 )
 
 var (
@@ -63,22 +64,33 @@ func InitJwt(secretKey string) {
 				return nil, err
 			}
 
-			userId, err := service.NewLoginService(ctx, c).Run(&req)
+			LoginResp, err := service.NewLoginService(ctx, c).Run(&req)
 			if err != nil {
-				frontendUtils.SendErrResponse(ctx, c, consts.StatusOK, err)
+				frontendUtils.SendErrResponse(ctx, c, consts.StatusUnauthorized, err)
 				return nil, err
 			}
-			return userId, nil
+			return LoginResp, nil
 		},
 		IdentityKey: IdentityKey,
+		Authorizator: func(data interface{}, ctx context.Context, c *app.RequestContext) bool {
+			resp, _ := c.Get(IdentityKey)
+			if resp.(user.LoginResp).Role == "admin" || resp.(user.LoginResp).Role == "user" {
+				return true
+			}
+			return false
+		},
 		IdentityHandler: func(ctx context.Context, c *app.RequestContext) interface{} {
 			claims := jwt.ExtractClaims(ctx, c)
-			return claims[IdentityKey]
+			return user.LoginResp{
+				UserId: int32(claims[IdentityKey].(float64)),
+				Role:   claims["role"].(string),
+			}
 		},
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
-			if v, ok := data.(int32); ok {
+			if v, ok := data.(*user.LoginResp); ok {
 				return jwt.MapClaims{
-					IdentityKey: v,
+					IdentityKey: v.UserId,
+					"role":      v.Role,
 				}
 			}
 			return jwt.MapClaims{}
@@ -88,7 +100,7 @@ func InitJwt(secretKey string) {
 			return e.Error()
 		},
 		Unauthorized: func(ctx context.Context, c *app.RequestContext, code int, message string) {
-			c.JSON(http.StatusOK, utils.H{
+			c.JSON(http.StatusUnauthorized, utils.H{
 				"code":    code,
 				"message": message,
 			})

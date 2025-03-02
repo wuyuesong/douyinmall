@@ -14,7 +14,7 @@
           <div class="mb-3">
             如果没有账户, 点击这里 <a href="/sign-up">注册</a>.
           </div>
-          <button type="submit" class="btn btn-primary" @click="handleLogin">登录</button>
+          <button type="submit" class="btn btn-primary">登录</button>
         </form>
       </div>
     </div>
@@ -51,10 +51,25 @@
                         email: this.email,
                         password: this.password
                     })
-                    Cookies.set('token', response.token)
-                    // 登录成功后跳转
-                    console.log('this.redirect', this.redirect)
-                    this.$router.push(this.redirect || '/')
+
+                    if (response.code == 200) { 
+                      this.$message({
+                          message: '登录成功！',
+                          type: 'success',
+                          duration: 1500
+                      })
+                      localStorage.setItem('token', response.token); // 写入 localStorage
+                      // 登录成功后跳转
+                      console.log('this.redirect', this.redirect)
+                      this.$router.push(this.redirect || '/')
+                    } else {
+                      this.$message({
+                          message: '登录失败！',
+                          type: 'error',
+                          duration: 1500
+                      })
+                    }
+
                 } catch (error) {
                     console.error('登录失败', error)
                 }

@@ -18,6 +18,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"time"
 
@@ -43,6 +44,28 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+func JwtWithWhitelist(whitelist []string) app.HandlerFunc {
+	return func(ctx context.Context, c *app.RequestContext) {
+		currentPath := string(c.Path())
+		fmt.Print(currentPath)
+		for _, path := range whitelist {
+			if currentPath == path {
+				hlog.Info("跳过 JWT 校验:", currentPath)
+				c.Next(ctx)
+				return
+			}
+		}
+		middleware.JwtMiddleware.MiddlewareFunc()(ctx, c)
+	}
+}
+
+var whitelist = []string{
+	"/",
+	"/home",
+	"/auth/login",
+	"/auth/sign-up",
+}
+
 func main() {
 	_ = godotenv.Load()
 	// init dal
@@ -54,6 +77,8 @@ func main() {
 	h := server.New(server.WithHostPorts(address))
 
 	registerMiddleware(h)
+
+	h.Use(JwtWithWhitelist(whitelist))
 
 	// add a ping route to test
 	h.GET("/ping", func(c context.Context, ctx *app.RequestContext) {
@@ -130,7 +155,15 @@ func registerMiddleware(h *server.Hertz) {
 	h.Use(recovery.Recovery())
 
 	// cores
-	h.Use(cors.Default())
+	// h.Use(cors.Default())
+	h.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 
 	middleware.Register(h)
 }

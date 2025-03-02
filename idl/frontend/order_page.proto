@@ -9,6 +9,6 @@ option go_package = "/frontend/order";
 
 service OrderService {
    rpc OrderList(common.Empty) returns(common.Empty) {
-      option (api.get) = "/order";
+      option (api.get) = "/user/order";
    }
 }

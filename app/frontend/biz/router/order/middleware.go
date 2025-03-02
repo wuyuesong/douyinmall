@@ -13,5 +13,14 @@ func rootMw() []app.HandlerFunc {
 
 func _orderlistMw() []app.HandlerFunc {
 	// your code...
+	// res := []app.HandlerFunc{
+	// 	middleware.JwtMiddleware.MiddlewareFunc(),
+	// }
+	// return res
+	return nil
+}
+
+func _userMw() []app.HandlerFunc {
+	// your code...
 	return nil
 }

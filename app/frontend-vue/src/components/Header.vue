@@ -5,9 +5,9 @@
       mode="horizontal"
       :ellipsis="false"
       @select="handleSelect"
-      style="display: flex; align-items: center;"
+      style="display: flex; align-items: center; height: 70px;"
     >
-      <el-menu-item index="0" style="width: 100px; height: 50px;  margin-left: 100px;" @click="gotoHome">
+      <el-menu-item index="0" style="width: 100px; height: 50px;  margin-left: 300px;" @click="gotoHome">
         <img
           style="width: 100px;;"
           src="../static/image/529bdbf8f6b8d51fb3aaa89d56970ba4.png"
@@ -39,12 +39,20 @@
       </div>
       <el-icon :size="25" style="margin-right: 20px"><ShoppingCart /></el-icon>
       <div v-if="hasToken">
-        <el-avatar style="margin-right: 100px"
-          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-        />
+        <el-dropdown trigger="click" placement="bottom-end" style="margin-right: 300px" @command="handleCommand">
+          <el-avatar style="margin-right: 100px"
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          />
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="orders">订单中心</el-dropdown-item>
+              <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
       <div v-else>
-        <el-button type="primary" style="margin-right: 100px" @click="gotoLogin">登录</el-button>
+        <el-button type="primary" style="margin-right: 300px" @click="gotoLogin">登录</el-button>
       </div>
     </el-menu>
   </template>
@@ -62,7 +70,7 @@
   import {Search} from '@element-plus/icons-vue'
   const input2 = ref('')
   
-  const hasToken = ref(!!Cookies.get('token'))
+  const hasToken = ref(!!localStorage.getItem('token'))
   
   const router = useRouter() // 使用 useRouter 获取路由实例
   
@@ -79,10 +87,26 @@
   }
   
   onMounted(() => {
-          hasToken.value = !!Cookies.get('token')
+          hasToken.value = !!localStorage.getItem('token')
   });
-  
-  
+
+  const handleCommand = (command: string | number | object) => {
+  switch (command) {
+    case 'orders':
+      router.push('/user/orders')
+      break
+    case 'logout':
+      handleLogout()
+      break
+  }
+}
+
+// 新增退出登录处理
+const handleLogout = () => {
+    localStorage.removeItem('token')
+    router.push('/') // 使用已定义的路由实例
+    hasToken.value = false
+}
   </script>
   
   <!-- <style scoped>

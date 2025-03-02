@@ -1,2 +1,6 @@
 app/*/.env
 app/frontend-vue/node_modules
+app/frontend-vue/dist/
+.vscode/launch.json
+app/frontend/tmp/main
+rpc_gen/kitex_gen
