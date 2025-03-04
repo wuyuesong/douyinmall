@@ -14,6 +14,9 @@ service ProductService {
     rpc SearchProducts(SearchProductReq) returns (common.Empty) {
         option (api.get) = "/search";
     }
+    rpc ProdcutPageNum(ProdcutPageNumReq) returns (common.Empty) {
+        option (api.get) = "/product/pageNum";
+    }
 }
 
 message ProdcutReq {
@@ -22,4 +25,8 @@ message ProdcutReq {
 
 message SearchProductReq {
     string q = 1 [(api.query) = "q"];
+}
+
+message ProdcutPageNumReq {
+    uint32 pageSize = 1 [(api.query) = "pageSize"];
 }

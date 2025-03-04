@@ -13,6 +13,7 @@ type RPCClient interface {
 	KitexClient() productcatalogservice.Client
 	Service() string
 	ListProducts(ctx context.Context, Req *product.ListProductsReq, callOptions ...callopt.Option) (r *product.ListProductsResp, err error)
+	ListProductsAll(ctx context.Context, Req *product.ListProductsReq, callOptions ...callopt.Option) (r *product.ListProductsResp, err error)
 	GetProduct(ctx context.Context, Req *product.GetProductReq, callOptions ...callopt.Option) (r *product.GetProductResp, err error)
 	SearchProducts(ctx context.Context, Req *product.SearchProductReq, callOptions ...callopt.Option) (r *product.SearchProductResp, err error)
 }
@@ -45,6 +46,10 @@ func (c *clientImpl) KitexClient() productcatalogservice.Client {
 
 func (c *clientImpl) ListProducts(ctx context.Context, Req *product.ListProductsReq, callOptions ...callopt.Option) (r *product.ListProductsResp, err error) {
 	return c.kitexClient.ListProducts(ctx, Req, callOptions...)
+}
+
+func (c *clientImpl) ListProductsAll(ctx context.Context, Req *product.ListProductsReq, callOptions ...callopt.Option) (r *product.ListProductsResp, err error) {
+	return c.kitexClient.ListProductsAll(ctx, Req, callOptions...)
 }
 
 func (c *clientImpl) GetProduct(ctx context.Context, Req *product.GetProductReq, callOptions ...callopt.Option) (r *product.GetProductResp, err error) {

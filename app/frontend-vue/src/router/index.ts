@@ -17,6 +17,15 @@ const routes = [
     {
         path: '/user/orders',
         component: () => import('../views/Order.vue'),
+    },
+    {
+        path: '/admin/home',
+        alias: '/admin',
+        component: () => import('../views/admin/Home.vue'),
+    },
+    {
+        path: '/admin/addProduct',
+        component: () => import('../views/admin/addProduct.vue'),
     }
 ]
 

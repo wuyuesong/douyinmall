@@ -30,3 +30,10 @@ func (s *ProductCatalogServiceImpl) SearchProducts(ctx context.Context, req *pro
 
 	return resp, err
 }
+
+// ListProductsAll implements the ProductCatalogServiceImpl interface.
+func (s *ProductCatalogServiceImpl) ListProductsAll(ctx context.Context, req *product.ListProductsReq) (resp *product.ListProductsResp, err error) {
+	resp, err = service.NewListProductsAllService(ctx).Run(req)
+
+	return resp, err
+}

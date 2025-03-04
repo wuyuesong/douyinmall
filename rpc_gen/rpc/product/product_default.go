@@ -16,6 +16,15 @@ func ListProducts(ctx context.Context, req *product.ListProductsReq, callOptions
 	return resp, nil
 }
 
+func ListProductsAll(ctx context.Context, req *product.ListProductsReq, callOptions ...callopt.Option) (resp *product.ListProductsResp, err error) {
+	resp, err = defaultClient.ListProductsAll(ctx, req, callOptions...)
+	if err != nil {
+		klog.CtxErrorf(ctx, "ListProductsAll call failed,err =%+v", err)
+		return nil, err
+	}
+	return resp, nil
+}
+
 func GetProduct(ctx context.Context, req *product.GetProductReq, callOptions ...callopt.Option) (resp *product.GetProductResp, err error) {
 	resp, err = defaultClient.GetProduct(ctx, req, callOptions...)
 	if err != nil {

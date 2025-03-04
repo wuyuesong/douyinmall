@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -12,6 +13,7 @@ type Product struct {
 	Description string     `json:"description"`
 	Picture     string     `json:"picture"`
 	Price       float32    `json:"price"`
+	Stock       uint32     `json:"stock"`
 	Categories  []Category `json:"categories" gorm:"many2many:product_category"`
 }
 
@@ -33,6 +35,38 @@ func (p ProductQuery) SearchProducts(q string) (products []*Product, err error) 
 	err = p.db.WithContext(p.ctx).Model(&Product{}).Find(&products, "name like? or description like?",
 		"%"+q+"%", "%"+q+"%",
 	).Error
+	return
+}
+
+type ProductAllResult struct {
+	Products   []Product
+	TotalCount int64 // 总记录数
+	TotalPages int64 // 总页数
+}
+
+func (c ProductQuery) ListProductsAll(page int32, pageSize int32, name string) (result ProductAllResult, err error) {
+	// 参数校验
+	if page < 1 || pageSize < 1 {
+		return result, fmt.Errorf("invalid page or pageSize")
+	}
+
+	// 查询总记录数
+	err = c.db.Model(&Product{}).Count(&result.TotalCount).Error
+	if err != nil {
+		return
+	}
+
+	// 计算总页数
+	result.TotalPages = (result.TotalCount + int64(pageSize) - 1) / int64(pageSize)
+
+	// 分页查询，按id升序排列
+	offset := (page - 1) * pageSize
+	err = c.db.WithContext(c.ctx).
+		Model(&Product{}).
+		Order("id ASC"). // 新增排序条件
+		Limit(int(pageSize)).
+		Offset(int(offset)).
+		Find(&result.Products).Error
 	return
 }
 

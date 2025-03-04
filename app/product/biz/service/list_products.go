@@ -19,9 +19,9 @@ func NewListProductsService(ctx context.Context) *ListProductsService {
 func (s *ListProductsService) Run(req *product.ListProductsReq) (resp *product.ListProductsResp, err error) {
 	// Finish your business logic.
 	categoryQuery := model.NewCategoryQuery(s.ctx, mysql.DB)
-	c, err := categoryQuery.GetProductsByCategoryName(req.CategoryName)
+	c, err := categoryQuery.GetProductsByCategoryName(req.Page, req.PageSize, req.CategoryName)
 	resp = &product.ListProductsResp{}
-	for _, v1 := range c {
+	for _, v1 := range c.Categories {
 		for _, v := range v1.Products {
 			resp.Products = append(resp.Products, &product.Product{
 				Id:          uint32(v.ID),
@@ -32,6 +32,6 @@ func (s *ListProductsService) Run(req *product.ListProductsReq) (resp *product.L
 			})
 		}
 	}
-
+	resp.TotalPage = uint32(c.TotalPages)
 	return
 }

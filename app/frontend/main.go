@@ -64,6 +64,7 @@ var whitelist = []string{
 	"/home",
 	"/auth/login",
 	"/auth/sign-up",
+	"/admin/home",
 }
 
 func main() {

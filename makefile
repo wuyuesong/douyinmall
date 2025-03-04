@@ -50,6 +50,9 @@ gen-checkout-page:
 gen-order-page:
 	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/order_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
 
+.PHONY:	gen-admin-page
+gen-admin-page:
+	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/admin_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
 
 .PHONY:	gen-rpc
 gen-rpc: gen-user gen-product gen-cart gen-payment gen-checkout gen-order
