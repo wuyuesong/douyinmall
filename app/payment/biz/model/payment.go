@@ -2,7 +2,6 @@ package model
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"gorm.io/gorm"
@@ -22,6 +21,5 @@ func (p PaymentLog) TableName() string {
 }
 
 func CreatePaymentLog(db *gorm.DB, ctx context.Context, payment *PaymentLog) error {
-	fmt.Print("payment")
 	return db.WithContext(ctx).Model(&PaymentLog{}).Create(payment).Error
 }

@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -28,7 +27,6 @@ func NewCheckoutService(ctx context.Context) *CheckoutService {
 // Run create note info
 func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.CheckoutResp, err error) {
 	// Finish your business logic.
-	fmt.Print("111111111111111111111")
 	cartResult, err := rpc.CartClient.GetCart(s.ctx, &cart.GetCartReq{UserId: req.UserId})
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(5005001, err.Error())
@@ -36,8 +34,6 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 	if cartResult == nil || cartResult.Items == nil {
 		return nil, kerrors.NewGRPCBizStatusError(5004001, "cart is empty")
 	}
-
-	fmt.Print("222222222222222222222")
 
 	var (
 		total float32
@@ -72,8 +68,6 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 	}
 
 	var orderId string
-
-	fmt.Print("333333333333333333333")
 
 	orderResp, err := rpc.OrderClient.PlaceOrder(s.ctx, &order.PlaceOrderReq{
 		UserId: req.UserId,
@@ -117,8 +111,6 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 		return nil, err
 	}
 
-	fmt.Print("444444444444444444444")
-
 	data, _ := proto.Marshal(&email.EmailReq{
 		From:        "from@example.com",
 		To:          req.Email,
@@ -127,9 +119,8 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 		Content:     "You just created an order in CloudWeGo shop",
 	})
 	msg := &nats.Msg{Subject: "email", Data: data}
-	fmt.Print(msg)
+
 	err = mq.Nc.PublishMsg(msg)
-	fmt.Print("errrrrrrrrrrrrrr", err)
 	if err != nil {
 		klog.Error(err.Error())
 	}

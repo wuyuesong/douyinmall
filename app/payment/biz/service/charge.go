@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -31,8 +30,6 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 		Year:   strconv.Itoa(int(req.CreditCard.CreditCardExpirationYear)),
 	}
 
-	fmt.Print("11111111111111111")
-
 	err = card.Validate(true)
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(4004001, err.Error())
@@ -41,8 +38,6 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(4005001, err.Error())
 	}
-
-	fmt.Print("22222222222222222")
 
 	err = model.CreatePaymentLog(mysql.DB, s.ctx, &model.PaymentLog{
 		UserId:        req.UserId,
@@ -54,7 +49,6 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(4005002, err.Error())
 	}
-	fmt.Print("3333333333333333333")
 
 	return &payment.ChargeResp{TransactionId: transactionId.String()}, nil
 }

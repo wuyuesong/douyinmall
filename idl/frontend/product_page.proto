@@ -11,6 +11,11 @@ service ProductService {
     rpc GetProduct(ProdcutReq) returns (common.Empty) {
         option (api.get) = "/product";
     }
+
+    rpc AddProduct(AddProductReq) returns (common.Empty) {
+        option (api.post) = "/product";
+    }
+
     rpc SearchProducts(SearchProductReq) returns (common.Empty) {
         option (api.get) = "/search";
     }
@@ -29,4 +34,14 @@ message SearchProductReq {
 
 message ProdcutPageNumReq {
     uint32 pageSize = 1 [(api.query) = "pageSize"];
+}
+
+
+message AddProductReq {
+    string name = 1;
+    string description = 2;
+    string picture = 3;
+    float price = 4;
+    string categorie = 5;
+    uint32 stock = 6;
 }

@@ -37,3 +37,10 @@ func (s *ProductCatalogServiceImpl) ListProductsAll(ctx context.Context, req *pr
 
 	return resp, err
 }
+
+// AddProduct implements the ProductCatalogServiceImpl interface.
+func (s *ProductCatalogServiceImpl) AddProduct(ctx context.Context, req *product.AddProductReq) (resp *product.AddProductResp, err error) {
+	resp, err = service.NewAddProductService(ctx).Run(req)
+
+	return resp, err
+}

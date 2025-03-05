@@ -21,22 +21,32 @@
           <el-input v-model.number="form.stock" type="number" />
         </el-form-item>
 
-        <el-form-item label="商品描述" prop="desc">
-          <el-input v-model="form.desc" type="textarea" />
+        <el-form-item label="商品描述" prop="description">
+          <el-input v-model="form.description" type="textarea" />
         </el-form-item>
+
+        <el-form-item label="商品分类" prop="categories">
+          <el-select v-model="form.categorie" placeholder="请选择分类" style="width: 100%">
+            <el-option label="普通商品" value="normal" />
+            <el-option label="折扣商品" value="discount" />
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="商品图片">
           <el-upload
             class="upload-demo"
-            :auto-upload="false"
-            :on-change="handleFileChange"
+            :action="uploadUrl"
+            :headers="uploadHeaders"
+            :on-success="handleImageSuccess"
             :file-list="fileList"
             list-type="picture"
             accept="image/*"
+            :limit="1"
           >
             <el-button type="primary">点击上传</el-button>
             <template #tip>
               <div class="el-upload__tip">
-                请上传JPEG/PNG格式的图片, 大小不超过2MB
+                请上传JPEG/PNG格式的图片，大小不超过2MB（仅支持单张图片）
               </div>
             </template>
           </el-upload>
@@ -54,25 +64,27 @@
 import Header from '../../components/AdminHeader.vue';
 import { reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import type { UploadFile, UploadFiles } from 'element-plus'
+import type { UploadFile } from 'element-plus'
 import { useRouter } from 'vue-router'
 import type { FormInstance } from 'element-plus'
 
 const router = useRouter()
+const uploadUrl = import.meta.env.VITE_API_BASE + '/upload-images' // 替换为实际图片上传接口
+const uploadHeaders = {
+  Authorization: 'Bearer ' + localStorage.getItem('token')
+}
 
 // 表单数据结构
 const form = reactive({
+  categorie: 'normal',
   name: '',
   price: '',
   stock: '',
-  desc: '',
-  images: [] as File[] // 存储图片文件
+  description: '',
+  picture: ''
 })
 
-// 文件列表用于显示预览
 const fileList = ref<UploadFile[]>([])
-
-
 const formRef = ref<FormInstance>()
 
 const rules = reactive({
@@ -106,55 +118,45 @@ const rules = reactive({
       trigger: 'blur' 
     }
   ],
-  desc: [
+  description: [
     { required: true, message: '请输入商品描述', trigger: 'blur' },
     { min: 10, max: 500, message: '长度在10到500个字符', trigger: 'blur' }
-  ]
+  ],
+  categorie: [
+    { required: true, message: '请选择商品分类', trigger: 'change' }
+  ],
 })
 
-// 处理文件选择
-const handleFileChange = (file: UploadFile, files: UploadFiles) => {
-  const isImage = file.raw?.type.startsWith('image/')
-  const isLt2M = file.raw?.size && file.raw.size / 1024 / 1024 < 2
-
-
-  if (!isImage) {
-    ElMessage.error('只能上传图片文件！')
-    return false
+const handleImageSuccess = (response: any) => {
+  if (response && response.url) {
+    form.picture = response.url
+    ElMessage.success('图片上传成功')
   }
-  if (!isLt2M) {
-    ElMessage.error('图片大小不能超过2MB!')
-    return false
-  }
-
-  // 将文件存入表单数据
-  if (file.raw) {
-    form.images.push(file.raw)
-  }
-  return true
 }
 
 const onSubmit = async () => {
-  // 构造表单数据
-  const formData = new FormData()
-  formData.append('name', form.name)
-  formData.append('price', form.price)
-  formData.append('stock', form.stock)
-  formData.append('desc', form.desc)
-  
-  // 添加图片文件
-  form.images.forEach((file, index) => {
-    formData.append(`images[${index}]`, file)
-  })
+  if (!form.picture) {
+    ElMessage.error('请上传商品图片')
+    return
+  }
+
+  const productData = {
+    name: form.name,
+    price: parseFloat(form.price),
+    stock: parseInt(form.stock, 10),
+    description: form.description,
+    categorie: form.categorie,
+    picture: form.picture
+  }
 
   try {
-    // 替换为你的API地址
-    const response = await fetch(import.meta.env.VITE_API_BASE + '/products', {
+    const response = await fetch(import.meta.env.VITE_API_BASE + '/product', {
       method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('token')
       },
-      body: formData
+      body: JSON.stringify(productData)
     })
 
     if (response.ok) {
@@ -169,7 +171,6 @@ const onSubmit = async () => {
   }
 }
 
-// 取消逻辑保持不变
 const handleCancel = () => {
   router.push('/admin')
 }

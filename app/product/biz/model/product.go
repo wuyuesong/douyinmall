@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"gorm.io/gorm"
@@ -68,6 +69,49 @@ func (c ProductQuery) ListProductsAll(page int32, pageSize int32, name string) (
 		Offset(int(offset)).
 		Find(&result.Products).Error
 	return
+}
+
+func (c *ProductQuery) AddProduct(item *Product, categoryId uint) (id int, err error) {
+	// 开启事务
+	tx := c.db.WithContext(c.ctx).Begin()
+	if tx.Error != nil {
+		return 0, tx.Error
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+			err = fmt.Errorf("transaction panic: %v", r)
+		}
+	}()
+
+	// 1. 创建商品基础信息
+	if err = tx.Create(item).Error; err != nil {
+		tx.Rollback()
+		return 0, fmt.Errorf("创建商品失败: %v", err)
+	}
+
+	// 2. 验证分类存在性
+	var category Category
+	if err = tx.First(&category, categoryId).Error; err != nil {
+		tx.Rollback()
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return 0, fmt.Errorf("分类ID %d 不存在", categoryId)
+		}
+		return 0, fmt.Errorf("分类查询失败: %v", err)
+	}
+
+	// 3. 建立关联
+	if err = tx.Model(item).Association("Categories").Append(&category); err != nil {
+		tx.Rollback()
+		return 0, fmt.Errorf("关联分类失败: %v", err)
+	}
+
+	// 提交事务
+	if err = tx.Commit().Error; err != nil {
+		return 0, fmt.Errorf("事务提交失败: %v", err)
+	}
+
+	return item.ID, nil
 }
 
 func NewProductQuery(ctx context.Context, db *gorm.DB) *ProductQuery {

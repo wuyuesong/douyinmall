@@ -18,7 +18,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"time"
 
@@ -47,7 +46,6 @@ import (
 func JwtWithWhitelist(whitelist []string) app.HandlerFunc {
 	return func(ctx context.Context, c *app.RequestContext) {
 		currentPath := string(c.Path())
-		fmt.Print(currentPath)
 		for _, path := range whitelist {
 			if currentPath == path {
 				hlog.Info("跳过 JWT 校验:", currentPath)

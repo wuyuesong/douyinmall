@@ -31,7 +31,6 @@ type PaginatedResult struct {
 
 func (c CategoryQuery) GetProductsByCategoryName(page int32, pageSize int32, name string) (result PaginatedResult, err error) {
 	// 参数校验
-	fmt.Print("page ", page, "pageSize ", pageSize)
 	if page < 1 || pageSize < 1 {
 		return result, fmt.Errorf("invalid page or pageSize")
 	}
