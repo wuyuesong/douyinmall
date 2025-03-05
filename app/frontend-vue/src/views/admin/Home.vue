@@ -122,6 +122,7 @@ export default {
     // 添加商品方法（示例）
     openAddDialog() {
       // 这里实现添加商品逻辑
+      this.$router.push('/admin/addProduct')
       console.log('打开添加商品对话框');
     },
     
