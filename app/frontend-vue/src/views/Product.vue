@@ -1,44 +1,5 @@
 <template>
-    <div class="d-flex justify-content-center align-items-center">
-      <!-- 卡片列表 -->
-      <el-row :gutter="20">
-        <el-col
-          v-for="(item, index) in paginatedData"
-          :key="index"
-          :span="6"
-          :xs="24"
-          :sm="12"
-          :md="8"
-          :lg="6"
-          :xl="4"
-        >
-          <el-card :body-style="{ padding: '0px' }" class="card-item">
-            <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-              class="image"
-            />
-            <div style="padding: 14px">
-              <span>{{ item.title }}</span>
-              <div class="bottom">
-                <time class="time">{{ item.date }}</time>
-                <el-button type="primary" text class="button">操作</el-button>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-  
-      <!-- 分页组件 -->
-      <div class="pagination-wrapper">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="total"
-          :page-size="pageSize"
-          v-model:current-page="currentPage"
-        />
-      </div>
-    </div>
+    
   </template>
   
   <script lang="ts" setup>
