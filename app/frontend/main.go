@@ -19,6 +19,7 @@ package main
 import (
 	"context"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -46,6 +47,11 @@ import (
 func JwtWithWhitelist(whitelist []string) app.HandlerFunc {
 	return func(ctx context.Context, c *app.RequestContext) {
 		currentPath := string(c.Path())
+		if strings.HasPrefix(currentPath, "/image/") {
+			c.Next(ctx)
+			return
+		}
+
 		for _, path := range whitelist {
 			if currentPath == path {
 				hlog.Info("跳过 JWT 校验:", currentPath)

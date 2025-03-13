@@ -14,7 +14,7 @@
       >
         <el-card :body-style="{ padding: '0px' }" class="card-item">
           <el-image
-            :src="item.image"
+            :src=getFullUrl(item.picture)
             class="image"
             fit="cover"
           >
@@ -29,6 +29,10 @@
           </el-image>
           <div style="padding: 14px">
             <span class="card-title">{{ item.name }}</span>
+            <div class="product-info">
+              <span class="price">￥{{ formatPrice(item.price) }}</span>
+              <span class="stock">库存 {{ item.stock }} 件</span>
+            </div>
             <div class="bottom">
               <el-button type="primary" text class="button">查看详情</el-button>
             </div>
@@ -67,23 +71,62 @@ export default {
   },
   data() {
     return {
+      currentType: 'normal',
       tableData: [],
       currentPage: 1,
       pageSize: 12,
-      total: 0
+      total: 0,
+      baseUrl: import.meta.env.VITE_IMAGE_BASE_URL 
     };
+  },
+  watch: {
+    // 监听路由参数变化
+    '$route.query.type': {
+      immediate: true,
+      handler(newType) {
+        if (newType === 'discount' || newType === 'normal') {
+          this.currentType = newType;
+          this.currentPage = 1; // 切换类型时重置页码
+          this.fetchData();
+        }
+      }
+    }
   },
   mounted() {
     this.fetchData();
   },
   methods: {
+
+    getFullUrl(relativePath) {
+      if (!relativePath) return '';
+      
+      // 使用URL对象处理路径
+      try {
+        const base = this.baseUrl.endsWith('/') 
+          ? this.baseUrl.slice(0, -1)
+          : this.baseUrl;
+        const path = relativePath.startsWith('/')
+          ? relativePath.slice(1)
+          : relativePath;
+        
+        return `${base}/${encodeURIComponent(path)}`;
+      } catch (e) {
+        console.error('URL构造错误:', e);
+        return '';
+      }
+    },
+    formatPrice(price) {
+      return Number(price).toFixed(2)
+    },
     // 获取数据
     async fetchData() {
       try {
-        const response = await this.$axios.get('/admin/home', {
+        const categoryType = this.$route.query.type || 'normal'; // 获取类型参数
+        const response = await this.$axios.get('/', {
           params: {
             page: this.currentPage,
-            size: this.pageSize
+            size: this.pageSize,
+            type: categoryType // 添加类型参数到请求
           }
         });
         
@@ -111,6 +154,29 @@ export default {
 </script>
 
 <style scoped>
+.active-category {
+  color: var(--el-color-primary);
+  font-weight: bold;
+}
+
+.product-info {
+  margin: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  color: #e4393c;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.stock {
+  color: #999;
+  font-size: 12px;
+}
+
 .image-error {
   display: flex;
   flex-direction: column;

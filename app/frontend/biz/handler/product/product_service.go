@@ -17,8 +17,8 @@ import (
 )
 
 const (
-	UploadDir      = "/home/pictures" // 文件保存目录
-	MaxUploadSize  = 2 << 20          // 2MB
+	UploadDir      = "/home/pictures/" // 文件保存目录
+	MaxUploadSize  = 2 << 20           // 2MB
 	AllowedFormats = "image/jpeg,image/png,image/gif"
 )
 

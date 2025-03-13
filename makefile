@@ -20,7 +20,7 @@ export ROOT_MOD=github.com/wuyuesong/douyinmall
 all: gen-frontend gen-rpc
 
 .PHONY: gen-frontend
-gen-frontend: gen-frontend-home gen-product-page gen-category-page gen-auth-page gen-cart-page gen-checkout-page gen-order-page
+gen-frontend: gen-frontend-home gen-product-page gen-category-page gen-auth-page gen-cart-page gen-checkout-page gen-order-page gen-admin-page gen-image-api
 
 .PHONY:	gen-frontend-home
 gen-frontend-home:
@@ -53,6 +53,10 @@ gen-order-page:
 .PHONY:	gen-admin-page
 gen-admin-page:
 	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/admin_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+
+.PHONY:	gen-image-api
+gen-image-api:
+	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/image_api.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
 
 .PHONY:	gen-rpc
 gen-rpc: gen-user gen-product gen-cart gen-payment gen-checkout gen-order

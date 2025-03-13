@@ -18,15 +18,14 @@
         <el-menu-item index="1">关于</el-menu-item>
         <el-sub-menu index="2">
           <template #title>分类</template>
-          <el-menu-item index="2-1">item one</el-menu-item>
-          <el-menu-item index="2-2">item two</el-menu-item>
-          <el-menu-item index="2-3">item three</el-menu-item>
-          <el-sub-menu index="2-4">
-            <template #title>item four</template>
-            <el-menu-item index="2-4-1">item one</el-menu-item>
-            <el-menu-item index="2-4-2">item two</el-menu-item>
-            <el-menu-item index="2-4-3">item three</el-menu-item>
-          </el-sub-menu>
+          <el-menu-item 
+            index="2-1" 
+            @click="() => handleCategoryClick('normal')"
+          >普通商品</el-menu-item>
+          <el-menu-item 
+            index="2-2" 
+            @click="() => handleCategoryClick('discount')"
+          >折扣商品</el-menu-item>
         </el-sub-menu>
       </div>
       <div style="margin-right: 0px">
@@ -57,7 +56,7 @@
     </el-menu>
   </template>
   
-  <script lang="ts" setup>
+<script lang="ts" setup>
   import { ref, onMounted} from 'vue'
   import Cookies from 'js-cookie'
   import { useRouter } from 'vue-router'
@@ -85,6 +84,13 @@
   const gotoHome = () => {
     router.push('/home') // 使用 router.push 跳转到登录页面
   }
+
+  const handleCategoryClick = (type: string) => {
+    router.push({
+      path: '/home',
+      query: { type } // 添加type查询参数
+    });
+  };
   
   onMounted(() => {
           hasToken.value = !!localStorage.getItem('token')
