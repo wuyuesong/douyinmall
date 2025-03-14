@@ -34,7 +34,13 @@
               <span class="stock">库存 {{ item.stock }} 件</span>
             </div>
             <div class="bottom">
-              <el-button type="primary" text class="button">查看详情</el-button>
+              <el-button 
+                type="primary" 
+                text 
+                class="button"
+                @click="$router.push(`/product-detail/${item.id}`)">
+                查看详情
+              </el-button>
             </div>
           </div>
         </el-card>

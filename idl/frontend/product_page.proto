@@ -8,8 +8,8 @@ import "frontend/common.proto";
 option go_package = "/frontend/product";
 
 service ProductService {
-    rpc GetProduct(ProdcutReq) returns (common.Empty) {
-        option (api.get) = "/product";
+    rpc GetProduct(common.Empty) returns (common.Empty) {
+        option (api.get) = "/product/:id";
     }
 
     rpc AddProduct(AddProductReq) returns (common.Empty) {
@@ -22,10 +22,6 @@ service ProductService {
     rpc ProdcutPageNum(ProdcutPageNumReq) returns (common.Empty) {
         option (api.get) = "/product/pageNum";
     }
-}
-
-message ProdcutReq {
-    uint32 id = 1 [(api.query) = "id"];
 }
 
 message SearchProductReq {

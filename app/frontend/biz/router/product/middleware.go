@@ -43,3 +43,8 @@ func _addproductMw() []app.HandlerFunc {
 func _uploadImagesMw() []app.HandlerFunc {
 	return nil
 }
+
+func _product0Mw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

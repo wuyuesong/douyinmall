@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -53,7 +52,6 @@ func (h *ImageService) Run(req *common.Empty) (common.Empty, error) {
 		getMimeType(fullPath),
 		fileBytes,
 	)
-	fmt.Print(h.RequestContext.Data)
 	return common.Empty{}, nil
 }
 

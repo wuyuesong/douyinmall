@@ -35,6 +35,7 @@ func (s *GetProductService) Run(req *product.GetProductReq) (resp *product.GetPr
 			Price:       p.Price,
 			Description: p.Description,
 			Name:        p.Name,
+			Stock:       p.Stock,
 		},
 	}, nil
 }
