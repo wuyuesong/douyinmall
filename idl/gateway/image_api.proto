@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package gateway.image;
+
+option go_package = "gateway/image";
+
+import "api.proto";
+import "gateway/common.proto";
+
+service ImageService {
+   rpc Image(common.Empty) returns(common.Empty) {
+      option (api.get) = "/image/:image";
+   }
+}

@@ -1,0 +1,15 @@
+// idl/hello/hello.proto
+syntax = "proto3";
+
+package gateway.admin;
+
+option go_package = "gateway/admin";
+
+import "api.proto";
+import "gateway/common.proto";
+
+service HomeService {
+   rpc Home(common.Empty) returns(common.Empty) {
+      option (api.get) = "/admin/home";
+   }
+}

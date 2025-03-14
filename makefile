@@ -17,46 +17,46 @@ export ROOT_MOD=github.com/wuyuesong/douyinmall
 
 
 .PHONY:	all
-all: gen-frontend gen-rpc
+all: gen-gateway gen-rpc
 
-.PHONY: gen-frontend
-gen-frontend: gen-frontend-home gen-product-page gen-category-page gen-auth-page gen-cart-page gen-checkout-page gen-order-page gen-admin-page gen-image-api
+.PHONY: gen-gateway
+gen-gateway: gen-gateway-home gen-product-page gen-category-page gen-auth-page gen-cart-page gen-checkout-page gen-order-page gen-admin-page gen-image-api
 
-.PHONY:	gen-frontend-home
-gen-frontend-home:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/home.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+.PHONY:	gen-gateway-home
+gen-gateway-home:
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/home.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-auth-page
 gen-auth-page:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/auth_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/auth_page.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-product-page
 gen-product-page:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/product_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/product_page.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-category-page
 gen-category-page:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/category_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/category_page.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-cart-page
 gen-cart-page:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/cart_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/cart_page.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-checkout-page
 gen-checkout-page:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/checkout_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/checkout_page.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-order-page
 gen-order-page:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/order_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/order_page.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-admin-page
 gen-admin-page:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/admin_page.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/admin_page.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-image-api
 gen-image-api:
-	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/image_api.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/image_api.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-rpc
 gen-rpc: gen-user gen-product gen-cart gen-payment gen-checkout gen-order gen-email
