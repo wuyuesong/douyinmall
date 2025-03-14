@@ -1,0 +1,1 @@
+import{_ as o}from"./Header.vue_vue_type_script_setup_true_lang-D5gxgl6I.js";import{_ as r,c as n,o as s,r as t}from"./index-WsWNOFqn.js";const c={components:{Header:o}};function a(_,p,m,f,d,i){const e=t("Header");return s(),n(e)}const u=r(c,[["render",a]]);export{u as default};
