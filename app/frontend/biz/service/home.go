@@ -32,13 +32,13 @@ func (h *HomeService) Run(req *common.Empty) (map[string]any, error) {
 	if err != nil {
 		return nil, err
 	}
-	products, err := rpc.ProductClient.ListProducts(h.Context, &product.ListProductsReq{Page: page, PageSize: size, CategoryName: categoryName})
+	resp, err := rpc.ProductClient.ListProducts(h.Context, &product.ListProductsReq{Page: page, PageSize: size, CategoryName: categoryName})
 	if err != nil {
 		return nil, err
 	}
 
 	return utils.H{
-		"title": "Hot Sales",
-		"items": products.Products,
+		"items":      resp.Products,
+		"total_page": resp.TotalPage,
 	}, nil
 }
