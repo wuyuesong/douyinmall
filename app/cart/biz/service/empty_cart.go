@@ -24,5 +24,4 @@ func (s *EmptyCartService) Run(req *cart.EmptyCartReq) (resp *cart.EmptyCartResp
 		return nil, kerrors.NewBizStatusError(50001, err.Error())
 	}
 	return &cart.EmptyCartResp{}, nil
-	return
 }

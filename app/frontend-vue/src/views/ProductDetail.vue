@@ -34,11 +34,34 @@
               <span class="stock">库存：{{ product.stock }}件</span>
             </div>
             
+            <!-- 数量选择 -->
+            <div class="quantity-selector">
+              <span class="quantity-label">数量：</span>
+              <el-input-number 
+                v-model="quantity"
+                :min="1" 
+                :max="product.stock"
+                :step="1"
+                size="large"
+                controls-position="right"
+              />
+            </div>
+            
             <div class="actions">
-              <el-button type="primary" size="large" class="buy-btn">
+              <el-button 
+                type="primary" 
+                size="large" 
+                class="buy-btn"
+                @click="handleBuy"
+              >
                 立即购买
               </el-button>
-              <el-button type="success" size="large" class="cart-btn">
+              <el-button 
+                type="success" 
+                size="large" 
+                class="cart-btn"
+                @click="handleAddToCart"
+              >
                 加入购物车
               </el-button>
             </div>
@@ -52,12 +75,6 @@
           <el-tab-pane label="商品详情" name="detail">
             <div class="detail-content" v-html="product.description"></div>
           </el-tab-pane>
-          <!-- <el-tab-pane label="规格参数" name="spec">
-            <el-table :data="product.specifications" border>
-              <el-table-column prop="name" label="参数名称" width="180" />
-              <el-table-column prop="value" label="参数值" />
-            </el-table>
-          </el-tab-pane> -->
         </el-tabs>
       </div>
     </div>
@@ -70,6 +87,7 @@
   <script>
   import Header from '../components/Header.vue';
   import { Picture } from '@element-plus/icons-vue';
+  import { ElMessageBox } from 'element-plus';
   
   export default {
     components: {
@@ -86,7 +104,8 @@
       return {
         product: null,
         activeTab: 'detail',
-        baseUrl: import.meta.env.VITE_IMAGE_BASE_URL
+        baseUrl: import.meta.env.VITE_IMAGE_BASE_URL,
+        quantity: 1  // 新增数量状态
       };
     },
     methods: {
@@ -112,13 +131,63 @@
       async fetchProductDetail() {
         try {
           const response = await this.$axios.get(`/product/${this.id}`);
-          this.product = response.item;
+          this.product = response.data.item;
         } catch (error) {
           console.error('获取商品详情失败:', error);
           this.$message.error('商品信息加载失败');
           this.$router.replace('/');
         }
-      }
+      },
+      handleBuy() {
+        if (this.quantity > this.product.stock) {
+          this.$message.error('购买数量不能超过库存');
+          return;
+        }
+        // 处理立即购买逻辑
+        this.$message.success(`立即购买 ${this.quantity} 件商品`);
+        console.log('购买数量:', this.quantity);
+      },
+
+      async handleAddToCart() {
+            try {
+                // 添加确认对话框
+                await ElMessageBox.confirm('确定要将此商品加入购物车吗？', '操作确认', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                });
+
+                if (this.quantity > this.product.stock) {
+                this.$message.error('添加数量不能超过库存');
+                return;
+                }
+
+                console.log('添加数量:', this.quantity);
+                const response = await this.$axios.post('/cart', {
+                    product_id: Number(this.id.trim()),
+                    Product_num: this.quantity
+                });
+
+                if (response.code === 200) {
+                    this.$message.success('已成功加入购物车');
+                } else {
+                    this.$message.error(response.message || '操作失败，请重试');
+                }
+            } catch (error) {
+                // 用户点击取消时忽略错误
+                if (error !== 'cancel') {
+                console.error('加入购物车失败:', error);
+                const msg = error.response?.data?.message || '网络错误，请稍后重试';
+                
+                if (error.response?.status === 401) {
+                    this.$message.error('登录已过期，请重新登录');
+                    return this.$router.push('/login');
+                }
+                
+                this.$message.error(msg);
+                }
+            }
+        }
     },
     mounted() {
       this.fetchProductDetail();
@@ -127,6 +196,30 @@
   </script>
   
   <style scoped>
+  /* 新增数量选择样式 */
+  .quantity-selector {
+    margin: 25px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .quantity-label {
+    font-size: 16px;
+    color: #666;
+    margin-right: 15px;
+  }
+
+  /* 调整Element输入数字组件样式 */
+  :deep(.el-input-number--large) {
+    width: 150px;
+  }
+
+  :deep(.el-input-number__decrease),
+  :deep(.el-input-number__increase) {
+    width: 32px;
+    background-color: #f5f7fa;
+  }
+
   .detail-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -231,22 +324,21 @@
   }
   
   @media (max-width: 768px) {
-    .main-image {
-      height: 300px;
+    /* 移动端样式调整 */
+    .quantity-selector {
+      flex-direction: column;
+      align-items: flex-start;
     }
-  
-    .product-info {
-      padding: 20px;
+
+    .quantity-label {
+      margin-bottom: 10px;
     }
-  
-    .product-title {
-      font-size: 22px;
+
+    :deep(.el-input-number--large) {
+      width: 100%;
     }
-  
-    .price {
-      font-size: 24px;
-    }
-  
+
+    /* 移动端按钮调整 */
     .buy-btn,
     .cart-btn {
       width: 100%;

@@ -52,3 +52,12 @@ func GetCartByUserId(ctx context.Context, db *gorm.DB, userId uint32) ([]*Cart, 
 		Find(&rows).Error
 	return rows, err
 }
+
+func GetCartCountByUserId(ctx context.Context, db *gorm.DB, userId uint32) (uint32, error) {
+	var count int64
+	err := db.WithContext(ctx).
+		Model(&Cart{}).
+		Where("user_id = ?", userId).
+		Count(&count).Error
+	return uint32(count), err
+}

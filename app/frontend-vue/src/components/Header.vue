@@ -36,7 +36,15 @@
           :prefix-icon="Search"
         />
       </div>
-      <el-icon :size="25" style="margin-right: 20px"><ShoppingCart /></el-icon>
+      <div style="position: relative; margin-right: 20px">
+        <el-icon :size="25"><ShoppingCart /></el-icon>
+        <span 
+          v-if="cartNum > 0" 
+          class="cart-badge"
+        >
+          {{ cartNum }}
+        </span>
+      </div>
       <div v-if="hasToken">
         <el-dropdown trigger="click" placement="bottom-end" style="margin-right: 300px" @command="handleCommand">
           <el-avatar style="margin-right: 100px"
@@ -57,9 +65,18 @@
   </template>
   
 <script lang="ts" setup>
-  import { ref, onMounted} from 'vue'
+  import { ref, onMounted, watchEffect } from 'vue'
   import Cookies from 'js-cookie'
   import { useRouter } from 'vue-router'
+
+  // 新增响应式变量
+  const cartNum = ref(0)
+
+  // 自动同步购物车数量
+  watchEffect(() => {
+    const num = localStorage.getItem('cartNum')
+    cartNum.value = num ? parseInt(num) : 0
+  })
   
   const activeIndex = ref('1')
   const handleSelect = (key: string, keyPath: string[]) => {
@@ -107,17 +124,35 @@
   }
 }
 
-// 新增退出登录处理
-const handleLogout = () => {
+  // 新增退出登录处理
+  const handleLogout = () => {
     localStorage.removeItem('token')
-    router.push('/') // 使用已定义的路由实例
+    localStorage.removeItem('cartNum') // 新增清除购物车数量
+    router.push('/')
     hasToken.value = false
-}
+    cartNum.value = 0 // 确保立即更新
+  }
   </script>
   
-  <!-- <style scoped>
-  .el-menu--horizontal > .el-menu-item:nth-child(1) {
+  <style scoped>
+  /* .el-menu--horizontal > .el-menu-item:nth-child(1) {
     margin-right: auto;
-  }
-  </style> -->
+  } */
+
+  .cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4444;
+  color: white;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+  </style>
   

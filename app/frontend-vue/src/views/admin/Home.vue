@@ -135,8 +135,8 @@ export default {
             size: this.pageSize3     // 假设每页条数变量是 pageSize
           }
         });
-        this.tableData = response.items;
-        this.totalPage3 = response.total_page;
+        this.tableData = response.data.items;
+        this.totalPage3 = response.data.total_page;
       } catch (error) {
         console.error('数据获取失败:', error);
       }

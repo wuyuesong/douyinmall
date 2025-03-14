@@ -41,10 +41,10 @@ func AddCartItem(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	_, err = service.NewAddCartItemService(ctx, c).Run(&req)
+	resp, err := service.NewAddCartItemService(ctx, c).Run(&req)
 	if err != nil {
 		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
 		return
 	}
-	c.Redirect(consts.StatusFound, []byte("/cart"))
+	utils.SendSuccessResponse(ctx, c, consts.StatusOK, resp)
 }

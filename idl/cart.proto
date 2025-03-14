@@ -20,7 +20,9 @@ message AddItemReq {
     CartItem item = 2;
 }
 
-message AddItemResp {}
+message AddItemResp {
+    uint32 cart_num = 1;
+}
 
 message GetCartReq {
     uint32 user_id = 1;

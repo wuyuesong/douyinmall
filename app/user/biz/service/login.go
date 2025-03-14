@@ -6,6 +6,8 @@ import (
 
 	"github.com/wuyuesong/douyinmall/app/user/biz/dal/mysql"
 	"github.com/wuyuesong/douyinmall/app/user/biz/model"
+	"github.com/wuyuesong/douyinmall/app/user/infra/rpc"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart"
 	user "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -32,9 +34,17 @@ func (s *LoginService) Run(req *user.LoginReq) (resp *user.LoginResp, err error)
 		return nil, err
 	}
 
+	cartResp, err := rpc.CartClient.GetCart(s.ctx, &cart.GetCartReq{
+		UserId: uint32(row.ID),
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	resp = &user.LoginResp{
-		UserId: int32(row.ID),
-		Role:   row.Role,
+		UserId:  int32(row.ID),
+		Role:    row.Role,
+		CartNum: int32(len(cartResp.Items)),
 	}
 
 	return resp, nil

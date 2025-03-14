@@ -12,6 +12,7 @@ import (
 	consul "github.com/kitex-contrib/registry-consul"
 	"github.com/wuyuesong/douyinmall/app/user/biz/dal"
 	"github.com/wuyuesong/douyinmall/app/user/conf"
+	"github.com/wuyuesong/douyinmall/app/user/infra/rpc"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user/userservice"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -25,6 +26,7 @@ func main() {
 
 	dal.Init()
 	opts := kitexInit()
+	rpc.InitClient()
 
 	svr := userservice.NewServer(new(UserServiceImpl), opts...)
 

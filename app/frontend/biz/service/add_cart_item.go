@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	utils "github.com/cloudwego/hertz/pkg/common/utils"
 	cart "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/cart"
-	common "github.com/wuyuesong/douyinmall/app/frontend/hertz_gen/frontend/common"
 	"github.com/wuyuesong/douyinmall/app/frontend/infra/rpc"
 	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/utils"
 	rpccart "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart"
@@ -20,13 +20,13 @@ func NewAddCartItemService(Context context.Context, RequestContext *app.RequestC
 	return &AddCartItemService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *AddCartItemService) Run(req *cart.AddCartItemReq) (resp *common.Empty, err error) {
+func (h *AddCartItemService) Run(req *cart.AddCartItemReq) (resp map[string]any, err error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
 	// todo edit your code
-	_, err = rpc.CartClient.AddItem(h.Context, &rpccart.AddItemReq{
+	rpcResp, err := rpc.CartClient.AddItem(h.Context, &rpccart.AddItemReq{
 		UserId: uint32(frontendUtils.GetUserIdFromCtx(h.Context)),
 		Item: &rpccart.CartItem{
 			ProductId: req.ProductId,
@@ -36,5 +36,7 @@ func (h *AddCartItemService) Run(req *cart.AddCartItemReq) (resp *common.Empty, 
 	if err != nil {
 		return nil, err
 	}
-	return
+	return utils.H{
+		"cart_num": rpcResp.CartNum,
+	}, nil
 }

@@ -22,6 +22,7 @@ message LoginReq {
 message LoginResp {
     int32 user_id = 1;
     string role = 2;
+    int32 cart_num = 3;
 }
 
 service UserService {

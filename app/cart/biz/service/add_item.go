@@ -39,5 +39,10 @@ func (s *AddItemService) Run(req *cart.AddItemReq) (resp *cart.AddItemResp, err 
 		return nil, kerrors.NewBizStatusError(50000, err.Error())
 	}
 
-	return &cart.AddItemResp{}, nil
+	cartNum, err := model.GetCartCountByUserId(s.ctx, mysql.DB, req.UserId)
+	if err != nil {
+		return nil, kerrors.NewBizStatusError(50000, err.Error())
+	}
+
+	return &cart.AddItemResp{CartNum: cartNum}, nil
 }

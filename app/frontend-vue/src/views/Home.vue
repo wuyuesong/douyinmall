@@ -136,8 +136,8 @@ export default {
           }
         });
         
-        this.tableData = response.items;
-        this.total = response.total_page;
+        this.tableData = response.data.items;
+        this.total = response.data.total_page;
       } catch (error) {
         console.error('数据获取失败:', error);
         this.$message.error('数据加载失败');

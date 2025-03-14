@@ -48,12 +48,24 @@ func InitJwt(secretKey string) {
 		TokenLookup:   "header: Authorization, query: token, cookie: jwt",
 		TokenHeadName: "Bearer",
 		LoginResponse: func(ctx context.Context, c *app.RequestContext, code int, token string, expire time.Time) {
-			c.JSON(http.StatusOK, utils.H{
-				"code":    code,
-				"token":   token,
-				"expire":  expire.Format(time.RFC3339),
-				"message": "success",
-			})
+			if cartNum, exists := c.Get("cartNum"); exists {
+				c.JSON(http.StatusOK, utils.H{
+					"code":    code,
+					"token":   token,
+					"expire":  expire.Format(time.RFC3339),
+					"cartNum": cartNum, // 添加购物车数量字段
+					"message": "success",
+				})
+			} else {
+				// 容错处理（根据业务需求选择是否强制返回错误）
+				c.JSON(http.StatusOK, utils.H{
+					"code":    code,
+					"token":   token,
+					"expire":  expire.Format(time.RFC3339),
+					"cartNum": 0, // 默认值或错误标识
+					"message": "success",
+				})
+			}
 		},
 		Authenticator: func(ctx context.Context, c *app.RequestContext) (interface{}, error) {
 			var err error
@@ -69,6 +81,7 @@ func InitJwt(secretKey string) {
 				frontendUtils.SendErrResponse(ctx, c, consts.StatusUnauthorized, err)
 				return nil, err
 			}
+			c.Set("cartNum", LoginResp.CartNum)
 			return LoginResp, nil
 		},
 		IdentityKey: IdentityKey,
