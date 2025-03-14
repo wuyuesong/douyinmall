@@ -170,6 +170,8 @@
 
                 if (response.code === 200) {
                     this.$message.success('已成功加入购物车');
+                    this.$store.commit('SET_CART_NUM', response.data.cart_num.toString())
+                    localStorage.setItem('cartNum', response.data.cart_num.toString())
                 } else {
                     this.$message.error(response.message || '操作失败，请重试');
                 }

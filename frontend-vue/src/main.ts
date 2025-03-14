@@ -2,6 +2,7 @@
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import store from './store'
 
 import router from './router/index'
 
@@ -13,6 +14,8 @@ import axiosInstance from './utils/axios'
 
 
 const app = createApp(App)
+app.use(store)
+store.dispatch('initializeCart')
 app.config.globalProperties.$axios = axiosInstance 
 
 // import { ElButton } from 'element-plus'

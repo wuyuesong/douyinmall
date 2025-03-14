@@ -69,14 +69,11 @@
   import Cookies from 'js-cookie'
   import { useRouter } from 'vue-router'
 
-  // 新增响应式变量
-  const cartNum = ref(0)
+  import { computed } from 'vue'
+  import { useStore } from 'vuex'
 
-  // 自动同步购物车数量
-  watchEffect(() => {
-    const num = localStorage.getItem('cartNum')
-    cartNum.value = num ? parseInt(num) : 0
-  })
+  const store = useStore()
+  const cartNum = computed(() => store.getters.cartNum)
   
   const activeIndex = ref('1')
   const handleSelect = (key: string, keyPath: string[]) => {

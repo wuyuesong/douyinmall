@@ -59,7 +59,8 @@
                           duration: 1500
                       })
                       localStorage.setItem('token', response.token); // 写入 localStorage
-                      localStorage.setItem('cartNum', response.cartNum); 
+                      localStorage.setItem('cartNum', response.cartNum.toString())
+                      this.$store.commit('SET_CART_NUM', response.cartNum.toString())
                       // 登录成功后跳转
                       console.log('this.redirect', this.redirect)
                       this.$router.push(this.redirect || '/')
