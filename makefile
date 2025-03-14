@@ -59,44 +59,44 @@ gen-image-api:
 	@cd app/frontend && cwgo server --type HTTP --idl ../../idl/frontend/image_api.proto  --service frontend --module ${ROOT_MOD}/app/frontend -I ../../idl
 
 .PHONY:	gen-rpc
-gen-rpc: gen-user gen-product gen-cart gen-payment gen-checkout gen-order
+gen-rpc: gen-user gen-product gen-cart gen-payment gen-checkout gen-order gen-email
 
 
 .PHONY:	gen-user
 gen-user:
 	@cd rpc_gen && cwgo client --type RPC --idl ../idl/user.proto --service user -module ${ROOT_MOD}/rpc_gen -I ../idl 
-	@cd app/user && cwgo server --type RPC --idl ../../idl/user.proto --service user -module ${ROOT_MOD} -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
+	@cd app/user && cwgo server --type RPC --idl ../../idl/user.proto --service user -module ${ROOT_MOD}/app/user -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
 
 .PHONY: gen-product
 gen-product:
 	@cd rpc_gen && cwgo client --type RPC --idl ../idl/product.proto --service product -module ${ROOT_MOD}/rpc_gen -I ../idl 
-	@cd app/product && cwgo server --type RPC --idl ../../idl/product.proto --service product -module ${ROOT_MOD} -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
+	@cd app/product && cwgo server --type RPC --idl ../../idl/product.proto --service product -module ${ROOT_MOD}/app/product -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
 
 
 .PHONY: gen-cart
 gen-cart:
 	@cd rpc_gen && cwgo client --type RPC --idl ../idl/cart.proto --service cart -module ${ROOT_MOD}/rpc_gen -I ../idl 
-	@cd app/cart && cwgo server --type RPC --idl ../../idl/cart.proto --service cart -module ${ROOT_MOD} -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
+	@cd app/cart && cwgo server --type RPC --idl ../../idl/cart.proto --service cart -module ${ROOT_MOD}/app/cart -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
 
 .PHONY: gen-payment
 gen-payment:
 	@cd rpc_gen && cwgo client --type RPC --idl ../idl/payment.proto --service payment -module ${ROOT_MOD}/rpc_gen -I ../idl 
-	@cd app/payment && cwgo server --type RPC --idl ../../idl/payment.proto --service payment -module ${ROOT_MOD} -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
+	@cd app/payment && cwgo server --type RPC --idl ../../idl/payment.proto --service payment -module ${ROOT_MOD}/app/payment -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
 
 .PHONY: gen-checkout
 gen-checkout:
 	@cd rpc_gen && cwgo client --type RPC --idl ../idl/checkout.proto --service checkout -module ${ROOT_MOD}/rpc_gen -I ../idl 
-	@cd app/checkout && cwgo server --type RPC --idl ../../idl/checkout.proto --service checkout -module ${ROOT_MOD} -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
+	@cd app/checkout && cwgo server --type RPC --idl ../../idl/checkout.proto --service checkout -module ${ROOT_MOD}/app/checkout -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
 
 .PHONY: gen-order
 gen-order:
 	@cd rpc_gen && cwgo client --type RPC --idl ../idl/order.proto --service order -module ${ROOT_MOD}/rpc_gen -I ../idl 
-	@cd app/order && cwgo server --type RPC --idl ../../idl/order.proto --service order -module ${ROOT_MOD} -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
+	@cd app/order && cwgo server --type RPC --idl ../../idl/order.proto --service order -module ${ROOT_MOD}/app/order -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
 
 .PHONY: gen-email
 gen-email:
 	@cd rpc_gen && cwgo client --type RPC --idl ../idl/email.proto --service email -module ${ROOT_MOD}/rpc_gen -I ../idl 
-	@cd app/email && cwgo server --type RPC --idl ../../idl/email.proto --service email -module ${ROOT_MOD} -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
+	@cd app/email && cwgo server --type RPC --idl ../../idl/email.proto --service email -module ${ROOT_MOD}/app/email -I ../../idl --pass "-use ${ROOT_MOD}/rpc_gen/kitex_gen"
 
 
 
