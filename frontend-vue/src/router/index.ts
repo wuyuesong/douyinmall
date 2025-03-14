@@ -32,6 +32,12 @@ const routes = [
         name: 'ProductDetail',
         component: () => import('../views/ProductDetail.vue'),
         props: true
+    },
+    {
+        path: '/cart',
+        name: 'Cart',
+        component: () => import('../views/CartPage.vue'),
+        meta: { requiresAuth: true }
     }
 ]
 

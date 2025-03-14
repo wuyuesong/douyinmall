@@ -36,12 +36,13 @@
           :prefix-icon="Search"
         />
       </div>
-      <div style="position: relative; margin-right: 20px">
+      <div 
+        style="position: relative; margin-right: 20px"
+        @click="gotoCart"
+        class="cart-icon"
+      >
         <el-icon :size="25"><ShoppingCart /></el-icon>
-        <span 
-          v-if="cartNum > 0" 
-          class="cart-badge"
-        >
+        <span v-if="cartNum > 0" class="cart-badge">
           {{ cartNum }}
         </span>
       </div>
@@ -129,12 +130,29 @@
     hasToken.value = false
     cartNum.value = 0 // 确保立即更新
   }
+
+  const gotoCart = () => {
+    if (hasToken.value) {
+      router.push('/cart')
+    } else {
+      const currentPath = router.currentRoute.value.fullPath
+      router.push({ path: '/login', query: { redirect: currentPath } })
+    }
+  }
   </script>
   
   <style scoped>
   /* .el-menu--horizontal > .el-menu-item:nth-child(1) {
     margin-right: auto;
   } */
+  .cart-icon {
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .cart-icon:hover {
+    transform: scale(1.1);
+  }
 
   .cart-badge {
   position: absolute;
