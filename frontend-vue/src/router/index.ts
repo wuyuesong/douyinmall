@@ -38,6 +38,12 @@ const routes = [
         name: 'Cart',
         component: () => import('../views/CartPage.vue'),
         meta: { requiresAuth: true }
+    },
+    {
+        path: '/checkout',
+        name: 'Checkout',
+        component: () => import('../views/CheckoutView.vue'),
+        meta: { requiresAuth: true } // 需要登录验证
     }
 ]
 

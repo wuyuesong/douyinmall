@@ -4,6 +4,7 @@ import (
 	"sync"
 
 	"github.com/cloudwego/kitex/client"
+	"github.com/cloudwego/kitex/pkg/transmeta"
 	consul "github.com/kitex-contrib/registry-consul"
 	"github.com/wuyuesong/douyinmall/app/frontend/conf"
 	frontendUtils "github.com/wuyuesong/douyinmall/app/frontend/utils"
@@ -64,6 +65,7 @@ func initCartClient() {
 
 func initCheckoutClient() {
 	var opts []client.Option
+	opts = append(opts, client.WithMetaHandler(transmeta.ClientTTHeaderHandler))
 	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddr)
 	frontendUtils.MustHandleError(err)
 	opts = append(opts, client.WithResolver(r))

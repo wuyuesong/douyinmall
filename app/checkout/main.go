@@ -6,6 +6,7 @@ import (
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
+	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	consul "github.com/kitex-contrib/registry-consul"
@@ -43,6 +44,7 @@ func kitexInit() (opts []server.Option) {
 	}
 
 	opts = append(opts, server.WithServiceAddr(addr))
+	opts = append(opts, server.WithMetaHandler(transmeta.ServerTTHeaderHandler))
 
 	// service info
 	opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{

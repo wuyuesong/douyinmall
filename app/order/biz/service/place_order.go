@@ -29,11 +29,9 @@ func (s *PlaceOrderService) Run(req *order.PlaceOrderReq) (resp *order.PlaceOrde
 		orderId, _ := uuid.NewUUID()
 
 		o := &model.Order{
-			OrderId: orderId.String(),
-			UserId:  req.UserId,
-			Consignee: model.Consignee{
-				Email: req.Email,
-			},
+			OrderId:   orderId.String(),
+			UserId:    req.UserId,
+			Consignee: model.Consignee{},
 		}
 		if req.Address != nil {
 			a := req.Address

@@ -27,16 +27,14 @@ import (
 	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/hertz-contrib/jwt"
+	"github.com/wuyuesong/douyinmall/app/gateway/biz/constants"
 	"github.com/wuyuesong/douyinmall/app/gateway/biz/service"
 	gatewayUtils "github.com/wuyuesong/douyinmall/app/gateway/biz/utils"
 	"github.com/wuyuesong/douyinmall/app/gateway/hertz_gen/gateway/auth"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 )
 
-var (
-	JwtMiddleware *jwt.HertzJWTMiddleware
-	IdentityKey   = "identity"
-)
+var JwtMiddleware *jwt.HertzJWTMiddleware
 
 func InitJwt(secretKey string) {
 	var err error
@@ -84,9 +82,9 @@ func InitJwt(secretKey string) {
 			c.Set("cartNum", LoginResp.CartNum)
 			return LoginResp, nil
 		},
-		IdentityKey: IdentityKey,
+		IdentityKey: constants.IdentityKey,
 		Authorizator: func(data interface{}, ctx context.Context, c *app.RequestContext) bool {
-			resp, _ := c.Get(IdentityKey)
+			resp, _ := c.Get(constants.IdentityKey)
 			if resp.(user.LoginResp).Role == "admin" || resp.(user.LoginResp).Role == "user" {
 				return true
 			}
@@ -95,15 +93,15 @@ func InitJwt(secretKey string) {
 		IdentityHandler: func(ctx context.Context, c *app.RequestContext) interface{} {
 			claims := jwt.ExtractClaims(ctx, c)
 			return user.LoginResp{
-				UserId: int32(claims[IdentityKey].(float64)),
+				UserId: int32(claims[constants.IdentityKey].(float64)),
 				Role:   claims["role"].(string),
 			}
 		},
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
 			if v, ok := data.(*user.LoginResp); ok {
 				return jwt.MapClaims{
-					IdentityKey: v.UserId,
-					"role":      v.Role,
+					constants.IdentityKey: v.UserId,
+					"role":                v.Role,
 				}
 			}
 			return jwt.MapClaims{}

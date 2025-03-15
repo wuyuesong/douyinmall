@@ -5,16 +5,11 @@ import (
 
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/nats-io/nats.go"
-	"github.com/wuyuesong/douyinmall/app/checkout/infra/mq"
 	"github.com/wuyuesong/douyinmall/app/checkout/infra/rpc"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/cart"
 	checkout "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/checkout"
-	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/email"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/order"
-	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/product"
-	"google.golang.org/protobuf/proto"
 )
 
 type CheckoutService struct {
@@ -31,8 +26,8 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(5005001, err.Error())
 	}
-	if cartResult == nil || cartResult.Items == nil {
-		return nil, kerrors.NewGRPCBizStatusError(5004001, "cart is empty")
+	if cartResult == nil || cartResult.Items == nil || len(cartResult.Items) == 0 {
+		return nil, kerrors.NewBizStatusError(5004001, "购物车为空")
 	}
 
 	var (
@@ -71,7 +66,6 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 
 	orderResp, err := rpc.OrderClient.PlaceOrder(s.ctx, &order.PlaceOrderReq{
 		UserId: req.UserId,
-		Email:  req.Email,
 		Address: &order.Address{
 			StreetAddress: req.Address.StreetAddress,
 			City:          req.Address.City,
@@ -89,49 +83,15 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 		orderId = orderResp.Order.OrderId
 	}
 
-	payReq := &payment.ChargeReq{
-		UserId:  req.UserId,
-		OrderId: orderId,
-		Amount:  total,
-		CreditCard: &payment.CreditCardInfo{
-			CreditCardNumber:          req.CreditCard.CreditCardNumber,
-			CreditCardCvv:             req.CreditCard.CreditCardCvv,
-			CreditCardExpirationMonth: req.CreditCard.CreditCardExpirationMonth,
-			CreditCardExpirationYear:  req.CreditCard.CreditCardExpirationYear,
-		},
-	}
-
 	_, err = rpc.CartClient.EmptyCart(s.ctx, &cart.EmptyCartReq{UserId: req.UserId})
 	if err != nil {
 		klog.Error(err.Error())
 	}
-
-	paymentResult, err := rpc.PaymentClient.Charge(s.ctx, payReq)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _ := proto.Marshal(&email.EmailReq{
-		From:        "from@example.com",
-		To:          req.Email,
-		ContentType: "text/plain",
-		Subject:     "You just created an order in CloudWeGo shop",
-		Content:     "You just created an order in CloudWeGo shop",
-	})
-	msg := &nats.Msg{Subject: "email", Data: data}
-
-	err = mq.Nc.PublishMsg(msg)
-	if err != nil {
-		klog.Error(err.Error())
-	}
-
-	klog.Info(paymentResult)
 	// change order state
 	klog.Info(orderResp)
 
 	resp = &checkout.CheckoutResp{
-		OrderId:       orderId,
-		TransactionId: paymentResult.TransactionId,
+		OrderId: orderId,
 	}
 	return
 }

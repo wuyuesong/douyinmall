@@ -7,21 +7,27 @@ import (
 	utils "github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/wuyuesong/douyinmall/app/gateway/biz/constants"
 	checkout "github.com/wuyuesong/douyinmall/app/gateway/hertz_gen/gateway/checkout"
+	common "github.com/wuyuesong/douyinmall/app/gateway/hertz_gen/gateway/common"
 	"github.com/wuyuesong/douyinmall/app/gateway/infra/rpc"
 	rpccheckout "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/checkout"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 )
 
-type CheckoutWaitingService struct {
+type CheckoutCreateService struct {
 	RequestContext *app.RequestContext
 	Context        context.Context
 }
 
-func NewCheckoutWaitingService(Context context.Context, RequestContext *app.RequestContext) *CheckoutWaitingService {
-	return &CheckoutWaitingService{RequestContext: RequestContext, Context: Context}
+func NewCheckoutCreateService(Context context.Context, RequestContext *app.RequestContext) *CheckoutCreateService {
+	return &CheckoutCreateService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *CheckoutWaitingService) Run(req *checkout.CheckoutReq) (resp map[string]any, err error) {
+func (h *CheckoutCreateService) Run(req *checkout.CheckoutReq) (resp *common.Empty, err error) {
+	//defer func() {
+	// hlog.CtxInfof(h.Context, "req = %+v", req)
+	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
+	//}()
+	// todo edit your code
 	var userId int32
 	if userInfo, exists := h.RequestContext.Get(constants.IdentityKey); exists {
 		userId = userInfo.(user.LoginResp).UserId
@@ -43,5 +49,5 @@ func (h *CheckoutWaitingService) Run(req *checkout.CheckoutReq) (resp map[string
 	if err != nil {
 		return nil, err
 	}
-	return utils.H{}, nil
+	return nil, nil
 }

@@ -41,7 +41,6 @@ func (s *ListOrderService) Run(req *order.ListOrderReq) (resp *order.ListOrderRe
 			CreatedAt: int32(v.CreatedAt.Unix()),
 			OrderId:   v.OrderId,
 			UserId:    v.UserId,
-			Email:     v.Consignee.Email,
 			Address: &order.Address{
 				StreetAddress: v.Consignee.StreetAddress,
 				Country:       v.Consignee.Country,

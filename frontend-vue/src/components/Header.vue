@@ -36,11 +36,10 @@
           :prefix-icon="Search"
         />
       </div>
-      <div 
-        style="position: relative; margin-right: 20px"
-        @click="gotoCart"
-        class="cart-icon"
-      >
+      <div v-if="hasToken" 
+          style="position: relative; margin-right: 20px"
+          @click="gotoCart"
+          class="cart-icon">
         <el-icon :size="25"><ShoppingCart /></el-icon>
         <span v-if="cartNum > 0" class="cart-badge">
           {{ cartNum }}

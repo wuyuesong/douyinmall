@@ -13,7 +13,6 @@ require (
 	github.com/redis/go-redis/v9 v9.7.1
 	github.com/wuyuesong/douyinmall/rpc_gen v0.0.0-00010101000000-000000000000
 	go.uber.org/zap v1.27.0
-	google.golang.org/protobuf v1.33.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gopkg.in/validator.v2 v2.0.1
 	gopkg.in/yaml.v2 v2.4.0
@@ -86,6 +85,7 @@ require (
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/genproto v0.0.0-20210513213006-bf773b8c8384 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
