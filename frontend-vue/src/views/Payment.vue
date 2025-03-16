@@ -171,15 +171,17 @@
       processing.value = true
       
       const payload = {
+        amount: parseFloat(total.value),
         credit_card: {
           credit_card_number: paymentForm.value.cardNumber.replace(/\s/g, ''),
           credit_card_cvv: parseInt(paymentForm.value.cvv),
           credit_card_expiration_month: parseInt(paymentForm.value.expMonth),
           credit_card_expiration_year: parseInt(paymentForm.value.expYear)
-        }
+        },
+        order_id: orderId,
       }
-  
-      const response = await $axios.post(`/payment/${orderId}`, payload)
+
+      const response = await $axios.post('/payment', payload)
       
       if (response.code === 200) {
         ElMessage.success('支付成功')
@@ -188,7 +190,7 @@
           query: { orderId }
         })
       } else {
-        ElMessage.error(`支付失败: ${response.message}`)
+        ElMessage.error(`支付失败: ${response}`)
       }
     } catch (error) {
       ElMessage.error(`支付失败: ${error.response?.data?.message || error.message}`)

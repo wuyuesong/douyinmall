@@ -38,7 +38,6 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(4005001, err.Error())
 	}
-
 	err = model.CreatePaymentLog(mysql.DB, s.ctx, &model.PaymentLog{
 		UserId:        req.UserId,
 		OrderId:       req.OrderId,
@@ -49,6 +48,5 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 	if err != nil {
 		return nil, kerrors.NewGRPCBizStatusError(4005002, err.Error())
 	}
-
 	return &payment.ChargeResp{TransactionId: transactionId.String()}, nil
 }

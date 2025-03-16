@@ -2,7 +2,8 @@ app/*/.env
 app/frontend-vue/node_modules
 app/frontend-vue/dist/
 .vscode
-app/frontend/tmp/main
+app/gateway/tmp/main
+app/gateway/hertz_gen
 rpc_gen/kitex_gen
 app/frontend/hertz_gen
 rpc_gen

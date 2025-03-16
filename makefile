@@ -54,6 +54,10 @@ gen-order-page:
 gen-admin-page:
 	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/admin_page.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
+.PHONY:	gen-payment-api
+gen-payment-api:
+	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/payment_api.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
+
 .PHONY:	gen-image-api
 gen-image-api:
 	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/image_api.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
