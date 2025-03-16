@@ -44,6 +44,12 @@ const routes = [
         name: 'Checkout',
         component: () => import('../views/CheckoutView.vue'),
         meta: { requiresAuth: true } // 需要登录验证
+    },
+    {
+        path: '/payment/:orderId',
+        name: 'Payment',
+        component: () => import('../views/Payment.vue'),
+        meta: { requiresAuth: true }
     }
 ]
 

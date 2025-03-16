@@ -7,7 +7,6 @@ import (
 	utils "github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/wuyuesong/douyinmall/app/gateway/biz/constants"
 	checkout "github.com/wuyuesong/douyinmall/app/gateway/hertz_gen/gateway/checkout"
-	common "github.com/wuyuesong/douyinmall/app/gateway/hertz_gen/gateway/common"
 	"github.com/wuyuesong/douyinmall/app/gateway/infra/rpc"
 	rpccheckout "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/checkout"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
@@ -22,7 +21,7 @@ func NewCheckoutCreateService(Context context.Context, RequestContext *app.Reque
 	return &CheckoutCreateService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *CheckoutCreateService) Run(req *checkout.CheckoutReq) (resp *common.Empty, err error) {
+func (h *CheckoutCreateService) Run(req *checkout.CheckoutReq) (resp map[string]any, err error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
@@ -36,7 +35,7 @@ func (h *CheckoutCreateService) Run(req *checkout.CheckoutReq) (resp *common.Emp
 		return
 	}
 
-	_, err = rpc.CheckoutClient.Checkout(h.Context, &rpccheckout.CheckoutReq{
+	rpcResp, err := rpc.CheckoutClient.Checkout(h.Context, &rpccheckout.CheckoutReq{
 		UserId: uint32(userId),
 		Address: &rpccheckout.Address{
 			Country:       req.Country,
@@ -49,5 +48,7 @@ func (h *CheckoutCreateService) Run(req *checkout.CheckoutReq) (resp *common.Emp
 	if err != nil {
 		return nil, err
 	}
-	return nil, nil
+	return utils.H{
+		"orderId": rpcResp.OrderId,
+	}, nil
 }

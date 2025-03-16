@@ -187,6 +187,10 @@ const submitOrder = async () => {
 
     if (response.code == 200) {
       ElMessage.success('订单创建成功')
+      router.push({
+        path: `/payment/${response.data.orderId}`,
+        query: { total: totalPrice.value } // 添加金额查询参数
+      })
       store.commit('SET_CART_NUM', 0)
       localStorage.setItem('cartNum', 0)
     } else {
