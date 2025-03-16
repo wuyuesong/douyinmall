@@ -7,6 +7,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/go-redsync/redsync/v4"
+	"github.com/go-redsync/redsync/v4/redis/goredis/v9"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )
@@ -39,45 +42,94 @@ type CachedProductQuery struct {
 	productQuery *ProductQuery
 	cacheClient  *redis.Client
 	prefix       string
+	rsync        *redsync.Redsync
 }
 
 func (c CachedProductQuery) GetById(productId int) (product Product, err error) {
-	// fmt.Print("productQuery", productQuery)
-	// fmt.Print("cacheClient", cacheClient)
 	cacheKey := fmt.Sprintf("%s_%s_%d", c.prefix, "product_by_id", productId)
-	cachedResult := c.cacheClient.Get(c.productQuery.ctx, cacheKey)
+	mutex := c.rsync.NewMutex(
+		"lock:"+cacheKey,
+		redsync.WithExpiry(10*time.Second),
+		redsync.WithTries(3),
+	)
 
-	err = func() error {
-		err1 := cachedResult.Err()
-		if err1 != nil {
-			return err1
-		}
-		cachedResultByte, err2 := cachedResult.Bytes()
-		if err2 != nil {
-			return err2
-		}
-		err3 := json.Unmarshal(cachedResultByte, &product)
-		if err3 != nil {
-			return err3
-		}
-		return nil
-	}()
-	if err != nil {
-		product, err = c.productQuery.GetById(productId)
-		if err != nil {
-			return Product{}, err
-		}
-		encoded, err := json.Marshal(product)
-		if err != nil {
-			return product, nil
-		}
-		_ = c.cacheClient.Set(c.productQuery.ctx, cacheKey, encoded, time.Hour)
+	// 第一次缓存检查
+	if err = c.getFromCache(cacheKey, &product); err == nil {
+		return product, nil
 	}
-	return
+
+	// 获取分布式锁
+	if err = mutex.Lock(); err != nil {
+		// 锁获取失败，降级直接查询数据库
+		return c.productQuery.GetById(productId)
+	}
+	defer func() {
+		if ok, err := mutex.Unlock(); !ok || err != nil {
+			klog.Error("分布式锁解锁异常: key=%s, ok=%t, error=%v",
+				mutex.Name(), ok, err)
+		}
+	}()
+
+	// 第二次缓存检查（双重检查）
+	if err = c.getFromCache(cacheKey, &product); err == nil {
+		return product, nil
+	}
+
+	// 查询数据库
+	product, err = c.productQuery.GetById(productId)
+	if err != nil {
+		return Product{}, fmt.Errorf("数据库查询失败: %w", err)
+	}
+
+	// 更新缓存
+	if err = c.setCache(cacheKey, product); err != nil {
+		// 记录缓存更新失败，但不影响返回数据
+		fmt.Printf("缓存更新失败: %v\n", err)
+	}
+
+	return product, nil
 }
 
 func NewCachedProductQuery(pq *ProductQuery, cacheClient *redis.Client) CachedProductQuery {
-	return CachedProductQuery{productQuery: pq, cacheClient: cacheClient, prefix: "douyin_mall"}
+	pool := goredis.NewPool(cacheClient)
+	rs := redsync.New(pool)
+	return CachedProductQuery{productQuery: pq, cacheClient: cacheClient, prefix: "douyin_mall", rsync: rs}
+}
+
+func (c CachedProductQuery) getFromCache(key string, target interface{}) error {
+	result := c.cacheClient.Get(c.productQuery.ctx, key)
+	if err := result.Err(); err != nil {
+		return err
+	}
+
+	data, err := result.Bytes()
+	if err != nil {
+		return fmt.Errorf("解码字节失败: %w", err)
+	}
+
+	if err := json.Unmarshal(data, target); err != nil {
+		return fmt.Errorf("JSON反序列化失败: %w", err)
+	}
+
+	return nil
+}
+
+func (c CachedProductQuery) setCache(key string, value Product) error {
+	encoded, err := json.Marshal(value)
+	if err != nil {
+		return fmt.Errorf("JSON序列化失败: %w", err)
+	}
+
+	if err := c.cacheClient.Set(
+		c.productQuery.ctx,
+		key,
+		encoded,
+		time.Hour,
+	).Err(); err != nil {
+		return fmt.Errorf("缓存设置失败: %w", err)
+	}
+
+	return nil
 }
 
 func (p ProductQuery) SearchProducts(q string) (products []*Product, err error) {
