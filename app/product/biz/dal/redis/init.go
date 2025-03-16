@@ -15,6 +15,7 @@ func Init() {
 		Username: conf.GetConf().Redis.Username,
 		Password: conf.GetConf().Redis.Password,
 		DB:       conf.GetConf().Redis.DB,
+		PoolSize: conf.GetConf().Redis.PoolSize,
 	})
 	if err := RedisClient.Ping(context.Background()).Err(); err != nil {
 		panic(err)

@@ -34,6 +34,7 @@ type Redis struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
 	DB       int    `yaml:"db"`
+	PoolSize int    `yaml:"pool_size" validate:"min=0"`
 }
 
 type Kitex struct {
@@ -74,6 +75,9 @@ func initConf() {
 	if err := validator.Validate(conf); err != nil {
 		klog.Error("validate config error - %v", err)
 		panic(err)
+	}
+	if conf.Redis.PoolSize == 0 {
+		conf.Redis.PoolSize = 100
 	}
 	conf.Env = GetEnv()
 	pretty.Printf("%+v\n", conf)
