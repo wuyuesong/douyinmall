@@ -46,8 +46,11 @@ import (
 
 func JwtWithWhitelist(whitelist []string) app.HandlerFunc {
 	return func(ctx context.Context, c *app.RequestContext) {
+		method := string(c.Method())
 		currentPath := string(c.Path())
-		if strings.HasPrefix(currentPath, "/image/") {
+		if (strings.HasPrefix(currentPath, "/image/") ||
+			strings.HasPrefix(currentPath, "/product/")) &&
+			method == "GET" { // 新增方法判断
 			c.Next(ctx)
 			return
 		}

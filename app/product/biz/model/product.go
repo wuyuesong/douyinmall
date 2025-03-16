@@ -2,9 +2,12 @@ package model
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 
+	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )
 
@@ -30,6 +33,51 @@ type ProductQuery struct {
 func (p ProductQuery) GetById(ProductId int) (product Product, err error) {
 	err = p.db.WithContext(p.ctx).Model(&Product{}).First(&product, ProductId).Error
 	return
+}
+
+type CachedProductQuery struct {
+	productQuery *ProductQuery
+	cacheClient  *redis.Client
+	prefix       string
+}
+
+func (c CachedProductQuery) GetById(productId int) (product Product, err error) {
+	// fmt.Print("productQuery", productQuery)
+	// fmt.Print("cacheClient", cacheClient)
+	cacheKey := fmt.Sprintf("%s_%s_%d", c.prefix, "product_by_id", productId)
+	cachedResult := c.cacheClient.Get(c.productQuery.ctx, cacheKey)
+
+	err = func() error {
+		err1 := cachedResult.Err()
+		if err1 != nil {
+			return err1
+		}
+		cachedResultByte, err2 := cachedResult.Bytes()
+		if err2 != nil {
+			return err2
+		}
+		err3 := json.Unmarshal(cachedResultByte, &product)
+		if err3 != nil {
+			return err3
+		}
+		return nil
+	}()
+	if err != nil {
+		product, err = c.productQuery.GetById(productId)
+		if err != nil {
+			return Product{}, err
+		}
+		encoded, err := json.Marshal(product)
+		if err != nil {
+			return product, nil
+		}
+		_ = c.cacheClient.Set(c.productQuery.ctx, cacheKey, encoded, time.Hour)
+	}
+	return
+}
+
+func NewCachedProductQuery(pq *ProductQuery, cacheClient *redis.Client) CachedProductQuery {
+	return CachedProductQuery{productQuery: pq, cacheClient: cacheClient, prefix: "douyin_mall"}
 }
 
 func (p ProductQuery) SearchProducts(q string) (products []*Product, err error) {
