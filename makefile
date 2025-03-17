@@ -63,8 +63,12 @@ gen-image-api:
 	@cd app/gateway && cwgo server --type HTTP --idl ../../idl/gateway/image_api.proto  --service gateway --module ${ROOT_MOD}/app/gateway -I ../../idl
 
 .PHONY:	gen-rpc
-gen-rpc: gen-user gen-product gen-cart gen-payment gen-checkout gen-order gen-email
+gen-rpc: gen-dir gen-user gen-product gen-cart gen-payment gen-checkout gen-order gen-email
 
+.PHONY: gen-dir
+gen-dir:
+	@mkdir -p rpc_gen
+	@cd rpc_gen && go mod init ${ROOT_MOD}/rpc_gen
 
 .PHONY:	gen-user
 gen-user:
