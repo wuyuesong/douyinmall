@@ -113,7 +113,7 @@
   const handleCommand = (command: string | number | object) => {
   switch (command) {
     case 'orders':
-      router.push('/user/orders')
+      router.push('/orders')
       break
     case 'logout':
       handleLogout()
