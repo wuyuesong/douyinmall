@@ -12,6 +12,8 @@ import (
 	consul "github.com/kitex-contrib/registry-consul"
 	"github.com/wuyuesong/douyinmall/app/payment/biz/dal"
 	"github.com/wuyuesong/douyinmall/app/payment/conf"
+	"github.com/wuyuesong/douyinmall/app/payment/infra/mq"
+	"github.com/wuyuesong/douyinmall/app/payment/infra/rpc"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment/paymentservice"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -20,6 +22,8 @@ import (
 func main() {
 	_ = godotenv.Load()
 	dal.Init()
+	rpc.Init()
+	mq.InitRocketMQ()
 	opts := kitexInit()
 
 	svr := paymentservice.NewServer(new(PaymentServiceImpl), opts...)

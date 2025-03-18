@@ -17,7 +17,7 @@ import (
 )
 
 func main() {
-	mq.Init()
+	mq.InitRocketMQConsumer()
 	consumer.Init()
 	opts := kitexInit()
 
