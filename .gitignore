@@ -8,3 +8,5 @@ rpc_gen/kitex_gen
 app/frontend/hertz_gen
 rpc_gen
 node_modules
+rocketmq/*
+mysql/*

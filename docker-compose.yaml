@@ -13,6 +13,8 @@ services:
       - MYSQL_DATABASE=demo_proto
     volumes:
       - ./db/sql/ini:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql 
+
   redis:
     image: "redis:latest"
     ports:
@@ -22,3 +24,36 @@ services:
     ports:
       - 4222:4222
       - 8222:8222
+
+  rmqnamesrv:
+    image: apache/rocketmq:5.2.0
+    container_name: rmqnamesrv
+    ports:
+      - 9876:9876
+    networks:
+      - rocketmq-net
+    command: sh mqnamesrv
+
+  rmqbroker:
+    image: apache/rocketmq:5.2.0
+    container_name: rmqbroker
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    environment:
+      - NAMESRV_ADDR=rmqnamesrv:9876
+      - JAVA_OPT_EXT=-server -Xms512m -Xmx512m -Xmn256m
+    volumes:
+      - ./rocketmq/broker/conf:/home/rocketmq/rocketmq-5.2.0/conf
+      - ./rocketmq/broker/store:/home/rocketmq/store
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - rocketmq-net
+    command: sh mqbroker -c /home/rocketmq/rocketmq-5.2.0/conf/broker.conf
+
+# # 新增自定义网络
+networks:
+  rocketmq-net:
+    driver: bridge

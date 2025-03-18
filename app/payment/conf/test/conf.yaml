@@ -21,3 +21,7 @@ redis:
   username: ""
   password: ""
   db: 0
+
+rocketmq:
+  namesrv_addrs: 
+    - "127.0.0.1:9876"  # 对应docker的namesrv端口映射

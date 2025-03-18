@@ -22,3 +22,9 @@ func GetByEmail(db *gorm.DB, email string) (*User, error) {
 	err := db.Where("email = ?", email).First(&user).Error
 	return &user, err
 }
+
+func GetByUserID(db *gorm.DB, userID uint) (*User, error) {
+	var user User
+	err := db.First(&user, userID).Error
+	return &user, err
+}

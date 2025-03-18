@@ -11,6 +11,13 @@ service OrderService {
   rpc ListOrder (ListOrderReq) returns (ListOrderResp) {}
 }
 
+
+enum OrderStatus {
+    ORDER_PENDING = 0;   // 待支付
+    PAYMENT_SUCCESS = 1; // 支付成功
+    PAYMENT_CANCELLED = 2; // 取消支付
+}
+
 message Address {
     string street_address = 1;
     string city = 2;
@@ -51,6 +58,7 @@ message Order {
     Address address = 4;
     string email = 5;
     int32 created_at = 6;
+    OrderStatus status = 7; 
 }
 
 message ListOrderResp {

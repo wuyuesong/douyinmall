@@ -23,6 +23,11 @@ type Config struct {
 	MySQL    MySQL    `yaml:"mysql"`
 	Redis    Redis    `yaml:"redis"`
 	Registry Registry `yaml:"registry"`
+	RocketMQ RocketMQ `yaml:"rocketmq"`
+}
+
+type RocketMQ struct {
+	NamesrvAddrs []string `yaml:"namesrv_addrs" validate:"min=1"` // 名称服务器地址列表，至少需要1个
 }
 
 type MySQL struct {
