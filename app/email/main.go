@@ -9,6 +9,7 @@ import (
 	"github.com/cloudwego/kitex/server"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	"github.com/wuyuesong/douyinmall/app/email/biz/consumer"
+	"github.com/wuyuesong/douyinmall/app/email/biz/dal"
 	"github.com/wuyuesong/douyinmall/app/email/conf"
 	"github.com/wuyuesong/douyinmall/app/email/infra/mq"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/email/emailservice"
@@ -18,6 +19,7 @@ import (
 
 func main() {
 	mq.InitRocketMQConsumer()
+	dal.Init()
 	consumer.Init()
 	opts := kitexInit()
 
