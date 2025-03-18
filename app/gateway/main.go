@@ -102,7 +102,6 @@ func main() {
 
 	auth.POST("/login", middleware.JwtMiddleware.LoginHandler)
 	auth.GET("/refresh_token", middleware.JwtMiddleware.RefreshHandler)
-	h.LoadHTMLGlob("template/*")
 	h.Static("/static", "./")
 
 	h.GET("/about", func(c context.Context, ctx *app.RequestContext) {

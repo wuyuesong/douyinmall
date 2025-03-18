@@ -1,5 +1,7 @@
 package types
 
+import "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/order"
+
 type OrderItem struct {
 	ProductName string
 	Picture     string
@@ -12,4 +14,5 @@ type Order struct {
 	CreatedDate string
 	Cost        float32
 	Items       []OrderItem
+	Status      order.OrderStatus
 }

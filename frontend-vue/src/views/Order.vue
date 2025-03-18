@@ -12,8 +12,23 @@
       >
         <el-card class="order-card" shadow="hover">
           <div class="order-header">
-            <span class="order-id">订单号：{{ order.OrderId }}</span>
-            <span class="order-time">下单时间：{{ formatTime(order.CreatedDate) }}</span>
+            <div class="order-info">
+              <span class="order-id">订单号：{{ order.OrderId }}</span>
+              <span class="order-time">下单时间：{{ formatTime(order.CreatedDate) }}</span>
+            </div>
+            <div class="order-status">
+              <span :class="statusClass(order.Status)">
+                {{ getStatusText(order.Status) }}
+              </span>
+              <el-button 
+                v-if="order.Status === 0" 
+                type="primary" 
+                size="small"
+                @click="goToPayment(order.OrderId)"
+              >
+                立即支付
+              </el-button>
+            </div>
           </div>
           
           <el-row :gutter="20" class="order-content">
@@ -51,6 +66,27 @@ import $axios from '@/utils/axios'
 const orders = ref([]);
 const router = useRouter();
 
+// 状态文本映射
+const statusTextMap = {
+  0: { text: '待支付', class: 'status-pending' },
+  1: { text: '支付成功', class: 'status-success' },
+  2: { text: '已取消', class: 'status-cancelled' }
+}
+
+// 获取状态文本
+const getStatusText = (status) => {
+  return statusTextMap[status]?.text || '未知状态'
+}
+
+// 获取状态样式类
+const statusClass = (status) => {
+  return statusTextMap[status]?.class || ''
+}
+
+// 跳转到支付页面
+const goToPayment = (orderId) => {
+  router.push(`/payment/${orderId}`)
+}
 const formatTime = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleString();
@@ -75,6 +111,36 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status-pending {
+  color: #e6a23c;
+  font-weight: 500;
+}
+
+.status-success {
+  color: #67c23a;
+  font-weight: 500;
+}
+
+.status-cancelled {
+  color: #909399;
+  font-weight: 500;
+}
+
 .content-container {
   padding: 24px;
   max-width: 1200px;
