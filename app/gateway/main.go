@@ -36,6 +36,7 @@ import (
 	"github.com/hertz-contrib/sessions"
 	"github.com/hertz-contrib/sessions/redis"
 	"github.com/joho/godotenv"
+	"github.com/wuyuesong/douyinmall/app/gateway/biz/handler/product"
 	"github.com/wuyuesong/douyinmall/app/gateway/biz/router"
 	"github.com/wuyuesong/douyinmall/app/gateway/conf"
 	"github.com/wuyuesong/douyinmall/app/gateway/infra/rpc"
@@ -72,6 +73,8 @@ var whitelist = []string{
 	"/auth/login",
 	"/auth/sign-up",
 	"/admin/home",
+	"/auth/register",
+	"/auth/upload-images",
 }
 
 func main() {
@@ -87,6 +90,7 @@ func main() {
 	registerMiddleware(h)
 
 	h.Use(JwtWithWhitelist(whitelist))
+	h.POST("/upload-images", product.UploadImages)
 
 	// add a ping route to test
 	h.GET("/ping", func(c context.Context, ctx *app.RequestContext) {

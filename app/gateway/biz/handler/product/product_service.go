@@ -114,7 +114,7 @@ func UploadImages(ctx context.Context, c *app.RequestContext) {
 
 	// 7. 返回成功响应
 	c.JSON(consts.StatusOK, commonUtils.H{
-		"url": fmt.Sprintf("%s%s", UploadDir, newFilename),
+		"url": fmt.Sprintf("%s", newFilename),
 	})
 }
 
