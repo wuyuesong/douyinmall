@@ -20,7 +20,7 @@ export ROOT_MOD=github.com/wuyuesong/douyinmall
 all: gen-gateway gen-rpc
 
 .PHONY: gen-gateway
-gen-gateway: gen-gateway-home gen-product-page gen-category-page gen-auth-page gen-cart-page gen-checkout-page gen-order-page gen-admin-page gen-image-api
+gen-gateway: gen-gateway-home gen-product-page gen-category-page gen-auth-page gen-cart-page gen-checkout-page gen-order-page gen-admin-page gen-image-api gen-payment-api
 
 .PHONY:	gen-gateway-home
 gen-gateway-home:
