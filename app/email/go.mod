@@ -7,6 +7,7 @@ replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 require (
 	github.com/apache/rocketmq-client-go/v2 v2.1.2
 	github.com/cloudwego/kitex v0.12.3
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/kitex-contrib/obs-opentelemetry/logging/logrus v0.0.0-20241120035129-55da83caab1b
 	github.com/kr/pretty v0.3.1
 	github.com/redis/go-redis/v9 v9.7.1

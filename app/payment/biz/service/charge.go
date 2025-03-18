@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/apache/rocketmq-client-go/v2/primitive"
-	"github.com/cloudwego/biz-demo/gomall/rpc_gen/kitex_gen/email"
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
 	creditcard "github.com/durango/go-credit-card"
@@ -17,6 +16,7 @@ import (
 	"github.com/wuyuesong/douyinmall/app/payment/biz/model"
 	"github.com/wuyuesong/douyinmall/app/payment/infra/mq"
 	"github.com/wuyuesong/douyinmall/app/payment/infra/rpc"
+	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/email"
 	payment "github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/payment"
 	"github.com/wuyuesong/douyinmall/rpc_gen/kitex_gen/user"
 	"go.opentelemetry.io/otel"
@@ -73,6 +73,7 @@ func (s *ChargeService) Run(req *payment.ChargeReq) (resp *payment.ChargeResp, e
 		ContentType: "text/plain", // 或改为 "text/plain; charset=UTF-8"
 		Subject:     "订单支付成功",
 		Content:     fmt.Sprintf("您成功购买了商品，订单号为%s", req.OrderId),
+		OrderId:     req.OrderId,
 	})
 
 	// 创建 RocketMQ 消息（Topic: EmailTopic, Tag: payment_success）

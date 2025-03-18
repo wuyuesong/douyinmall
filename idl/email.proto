@@ -10,6 +10,7 @@ message EmailReq{
   string content_type = 3;
   string subject = 4;
   string content = 5;
+  string order_id = 6;
 }
 
 message EmailResp {

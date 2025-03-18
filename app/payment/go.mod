@@ -6,7 +6,6 @@ replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 
 require (
 	github.com/apache/rocketmq-client-go/v2 v2.1.2
-	github.com/cloudwego/biz-demo/gomall/rpc_gen v0.0.0-20250221030954-58f21ff9d9c9
 	github.com/cloudwego/kitex v0.12.3
 	github.com/durango/go-credit-card v0.0.0-20220404131259-a9e175ba4082
 	github.com/google/uuid v1.6.0
@@ -18,7 +17,6 @@ require (
 	github.com/wuyuesong/douyinmall/rpc_gen v0.0.0-00010101000000-000000000000
 	go.opentelemetry.io/otel v1.25.0
 	go.uber.org/zap v1.27.0
-	google.golang.org/protobuf v1.33.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gopkg.in/validator.v2 v2.0.1
 	gopkg.in/yaml.v2 v2.4.0
@@ -97,6 +95,8 @@ require (
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240401170217-c3f982113cda // indirect
+	google.golang.org/grpc v1.63.0 // indirect
+	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	stathat.com/c/consistent v1.0.0 // indirect
 )
