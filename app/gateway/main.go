@@ -21,7 +21,7 @@ import (
 	"os"
 	"strings"
 	"time"
-
+	"github.com/wuyuesong/douyinmall/app/gateway/biz/dal"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -43,6 +43,9 @@ import (
 	"github.com/wuyuesong/douyinmall/app/gateway/middleware"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
+	"github.com/hertz-contrib/casbin" // 重命名导入避免混淆
+	gateutil	"github.com/wuyuesong/douyinmall/app/gateway/biz/utils"
+	
 )
 
 func JwtWithWhitelist(whitelist []string) app.HandlerFunc {
@@ -69,21 +72,22 @@ func JwtWithWhitelist(whitelist []string) app.HandlerFunc {
 
 var whitelist = []string{
 	"/",
+	"/ping",
 	"/home",
 	"/auth/login",
 	"/auth/sign-up",
 	"/admin/home",
 	"/auth/register",
-	"/auth/upload-images",
+	"/upload-images",
 }
 
 func main() {
 	_ = godotenv.Load()
 	// init dal
-	// dal.Init()
+	dal.Init()
 	rpc.Init()
 	middleware.InitJwt(os.Getenv("SESSION_SECRET"))
-
+	middleware.InitCasbin()
 	address := conf.GetConf().Hertz.Address
 	h := server.New(server.WithHostPorts(address))
 
@@ -92,11 +96,9 @@ func main() {
 	h.Use(JwtWithWhitelist(whitelist))
 	h.POST("/upload-images", product.UploadImages)
 
-	// add a ping route to test
-	h.GET("/ping", func(c context.Context, ctx *app.RequestContext) {
-		ctx.JSON(consts.StatusOK, utils.H{"ping": "pong"})
+	h.GET("/ping", middleware.CasbinHertzMiddleware.RequiresPermissions("ping:GET",casbin.WithLogic(casbin.AND)), func(ctx context.Context, c *app.RequestContext) {
+		gateutil.SendSuccessResponse(ctx, c, consts.StatusOK, "pong")
 	})
-
 	router.GeneratedRegister(h)
 	auth := h.Group("/auth")
 
