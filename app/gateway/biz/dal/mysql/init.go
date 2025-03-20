@@ -1,9 +1,11 @@
 package mysql
 
 import (
-	"github.com/wuyuesong/douyinmall/app/gateway/conf"
+	"fmt"
+	"os"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	
 )
 
 var (
@@ -12,7 +14,8 @@ var (
 )
 
 func Init() {
-	DB, err = gorm.Open(mysql.Open(conf.GetConf().MySQL.DSN),
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/gateway?charset=utf8mb4&parseTime=True&loc=Local", os.Getenv("MYSQL_USER"), os.Getenv("MYSQL_PASSWORD"), os.Getenv("MYSQL_HOST"))
+	DB, err = gorm.Open(mysql.Open(dsn),
 		&gorm.Config{
 			PrepareStmt:            true,
 			SkipDefaultTransaction: true,
@@ -21,4 +24,5 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+	
 }
